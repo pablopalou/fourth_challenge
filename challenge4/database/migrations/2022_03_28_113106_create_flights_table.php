@@ -25,7 +25,7 @@ return new class extends Migration
             $table->time('landing');
             
             #$table->unsignedBigInteger('airline_id');
-            $table->foreignId('airline_id')->references('id')->on('airlines');
+            $table->foreignId('airline_id')->references('id')->on('airlines')->cascadeOnDelete();
             
             $table->timestamps();
         });
