@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('origin_id');
+            #$table->unsignedBigInteger('origin_id');
             $table->foreignId('origin_id')->references('id')->on('cities');
             
-            $table->unsignedBigInteger('destination_id');
+            #$table->unsignedBigInteger('destination_id');
             $table->foreignId('destination_id')->references('id')->on('cities');
             
             $table->time('takeOff');
             $table->time('landing');
             
-            $table->unsignedBigInteger('airline_id');
+            #$table->unsignedBigInteger('airline_id');
             $table->foreignId('airline_id')->references('id')->on('airlines');
             
             $table->timestamps();

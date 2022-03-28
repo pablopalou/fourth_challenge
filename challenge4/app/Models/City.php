@@ -12,4 +12,8 @@ class City extends Model
     public function flights(){
         return $this->hasMany(Flight::class);
     }
+
+    public function airlines(){
+        return $this->belongsToMany(Airline::class);
+    }
 }
