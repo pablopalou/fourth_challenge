@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         Flight::create([
             'origin_id' => 1,
             'destination_id' => 1,
-            'takeOff' => Carbon::now(),
+            'takeOff' => date("2020-2-20 16:30:45"),
             'landing' => Carbon::now(),
             'airline_id' => 1
         ]);
