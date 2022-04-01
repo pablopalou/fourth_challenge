@@ -18,11 +18,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        City::factory(3)->create();
-        Airline::factory(3)->create();
+        City::factory(15)->create();
+        Airline::factory(4)->create();
         Flight::create([
             'origin_id' => 1,
             'destination_id' => 1,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
             'takeOff' => date("2020-2-20 16:30:45"),
             'landing' => Carbon::now(),
             'airline_id' => 1

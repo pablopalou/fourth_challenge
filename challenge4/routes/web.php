@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('home');
 });
 
-Route::get('/ciudades', function () {
-    return view('city');
-});
+Route::get('/ciudades', [CityController::class, 'index']);
+
+Route::post('/ciudades', [CityController::class, 'store']);
+
+Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
+
+Route::get('/editCity/{id}', [CityController::class, 'edit']);
+
+Route::post('/updateCity/{id}', [CityController::class, 'update']);
+// cambie a post en vez de put
+
+Route::delete('/deleteCity/{id}', [CityController::class, 'delete']);
+
+
+
+// Route::get('/ciudades/save', [CityController::class, 'save']);
+
+// Route::get('/ciudades/edit/{id}', [CityController::class, 'form_edit']);
+
