@@ -201,6 +201,7 @@
     <script>
       $(document).ready(function(e) {
         var city_id;
+        // var page = 0;
         fetchCities();
 
         // <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">' +item.flights_outgoing_count + '</td>\
@@ -212,6 +213,7 @@
             url: "/fetch-cities",
             dataType: "json",
             success: function (response){
+              console.log(response);
               $('tbody').html("");
               $.each(response.cities.data, function(key, item){
                   $('tbody').append('<tr>\

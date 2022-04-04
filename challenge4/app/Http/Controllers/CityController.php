@@ -60,7 +60,7 @@ class CityController extends Controller
     
     public function fetchCities(){
         $cities = City::paginate(10);
-            
+        
         return response()->json([
             'cities' => $cities
         ]);

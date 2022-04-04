@@ -32,8 +32,3 @@ Route::post('/updateCity/{id}', [CityController::class, 'update']);
 Route::delete('/deleteCity/{id}', [CityController::class, 'delete']);
 
 
-
-// Route::get('/ciudades/save', [CityController::class, 'save']);
-
-// Route::get('/ciudades/edit/{id}', [CityController::class, 'form_edit']);
-
