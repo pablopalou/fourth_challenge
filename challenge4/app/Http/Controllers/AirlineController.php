@@ -29,7 +29,9 @@ class AirlineController extends Controller
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:airlines'
+            'name' => 'required|unique:airlines',
+            'description' => 'required'
+
         ]);
 
         if ($validator->fails()){
@@ -44,7 +46,8 @@ class AirlineController extends Controller
             $airline->save();
             return response()->json([
                 'status' => 200,
-                'message' => "Airline added successfully"
+                'message' => "Airline added successfully",
+                'airline' => $airline
             ]);
         }
 
@@ -65,7 +68,7 @@ class AirlineController extends Controller
         
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:airlines',
-            'description' => 'required',
+            'description' => 'required'
             
         ]);
 
