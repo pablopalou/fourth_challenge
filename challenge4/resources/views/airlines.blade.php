@@ -2,6 +2,38 @@
 {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
 <x-index>
     @section('content')
+
+      <!-- Modal  FOR ADDING airline-->
+<div class="modal fade" id="addairlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a new airline</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="saveform_errList"></ul> 
+          
+          <div class="form-group mb-3">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <input type="name" name="name" id="name" class="name block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md">
+            </div>
+            <label for="description" class="block text-sm font-medium text-gray-700 mt-2">Description</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+                <textarea rows="4" cols="4" name="description" id="editDescription" class="description block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
+            </div>
+            {{-- FALTA PONER LAS CIUDADES --}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button name="boton" value="" id="addNewairline" data-db-dismiss="modal" type="submit" class="add_airline text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Accept</button>
+          <button type="button" data-dismiss="modal" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button> 
+                    
+        </div>
+      </div>
+    </div>
+  </div>
   
   {{-- EDIT airline MMODAL --}}
   <div class="modal fade" id="editairlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,6 +97,11 @@
   
           <div id="success-message">
   
+          </div>
+          <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addairlineModal">
+              Add airline
+            </button>
           </div>
         </div>
       </div>
@@ -154,6 +191,45 @@
             });
             
           });
+
+          $(document).on('click', '.add_airline', function(e){
+          e.preventDefault();
+          var data = {
+            'name' : $('.name').val(),
+            'description' : $('.description').val()
+          }
+
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+          $.ajax({
+            type: "POST",
+            url: "/airlines",
+            data: data,
+            dataType: "json",
+            success: function (response){
+              if (response.status == 400){
+                $('#saveform_errList').html("");
+                $('#saveform_errList').addClass('alert alert-danger');
+
+                $.each(response.errors, function(key, err_val){
+                  $('#saveform_errList').append('<li>'+err_val+'</li>');
+                });
+              } else {
+                $('#saveform_errList').html("");
+                $('#success-message').addClass('alert alert-success');
+                $('#success-message').text(response.message);
+                $('#addairlineModal').modal('hide');
+                $('#addairlineModal').find('input').val('');
+                fetchairlines();
+              }
+            } 
+
+          });
+        });
   
           
           $(document).on('click', '.edit_airline', function(e){

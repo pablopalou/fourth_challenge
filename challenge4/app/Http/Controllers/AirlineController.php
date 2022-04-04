@@ -27,6 +27,29 @@ class AirlineController extends Controller
         ]);
     }
 
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:airlines'
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ]);
+        } else {
+            $airline = new Airline;
+            $airline->name = $request->input('name');
+            $airline->description = $request->input('description');
+            $airline->save();
+            return response()->json([
+                'status' => 200,
+                'message' => "Airline added successfully"
+            ]);
+        }
+
+    }
+
     public function edit($id){
         $airline = Airline::find($id);
         if (!$airline){
@@ -41,7 +64,7 @@ class AirlineController extends Controller
     public function update(Request $request, $id){
         
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:cities',
+            'name' => 'required|unique:airlines',
             'description' => 'required',
             
         ]);
