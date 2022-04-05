@@ -23,7 +23,14 @@
             <div class="mt-1 relative rounded-md shadow-sm">
                 <textarea rows="4" cols="4" name="description" id="description" class="description block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
             </div>
-            {{-- FALTA PONER LAS CIUDADES --}}
+            <label for="cities" class="block text-sm font-medium text-gray-700 mt-2">Cities</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+                <select name="cities[]" id="cities" multiple>
+                    @foreach ($cities as $city)
+                        <option value="{{$city->id}}">{{$city->name}}</option>
+                    @endforeach
+                </select>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -135,7 +142,8 @@
           async function addAirline(){
             let data = {
                 'name' : $('.name').val(),
-                'description' : $('.description').val()
+                'description' : $('.description').val(),
+                'selectedCities' : $('#cities').val()
             };
             const response = await fetch('/airlines',{
                 method: 'POST',

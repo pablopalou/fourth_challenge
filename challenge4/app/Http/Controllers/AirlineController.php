@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Airline;
+use App\Models\City;
 use App\Models\Flight;
 use Illuminate\Support\Facades\Validator;
 class AirlineController extends Controller
@@ -14,8 +15,10 @@ class AirlineController extends Controller
             ->withCount('flights')
             ->paginate(10);
 
+        $cities = City::all();
         return view('airlines', [
-            'airlines' => $airlines
+            'airlines' => $airlines,
+            'cities' => $cities,
         ]);
     }
     
@@ -42,8 +45,14 @@ class AirlineController extends Controller
         } else {
             $airline = new Airline;
             $airline->name = $request->input('name');
-            $airline->description = $request->input('description');
+            $airline->description = $request->input('description');       
             $airline->save();
+            if ($request->input('selectedCities')){
+                $cities = $request->input('selectedCities');
+                foreach ($cities as $city){
+                    $airline->cities()->attach(intval($city));
+                }
+            }
             return response()->json([
                 'status' => 200,
                 'message' => "Airline added successfully",
