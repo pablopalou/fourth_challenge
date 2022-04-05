@@ -14,8 +14,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class CityController extends Controller
 {
-    
-    public function index(){
+    public function index()
+    {
         # Esta forma hace n+1 queries y encima como devuelve coleccion no lo puedo paginar asi nomas.
         // $map_res = City::all()->map(function($city) {
         //     $item = [];
@@ -24,7 +24,7 @@ class CityController extends Controller
         //     $item['flightsOutgoing'] = $city->flightsOutgoing->count();
         //     $item['flightsIncoming'] = $city->flightsIncoming->count();
         //     return $item;
-        // }); 
+        // });
 
         $cities = City::query()
             ->withCount('flightsOutgoing')
@@ -36,12 +36,13 @@ class CityController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:cities'
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->messages()
@@ -55,10 +56,10 @@ class CityController extends Controller
                 'message' => "City added successfully"
             ]);
         }
-
     }
     
-    public function fetchCities(){
+    public function fetchCities()
+    {
         $cities = City::paginate(10);
         
         return response()->json([
@@ -66,9 +67,10 @@ class CityController extends Controller
         ]);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $city = City::find($id);
-        if (!$city){
+        if (!$city) {
             dd("ciudad no encontrada");
         }
         return response()->json([
@@ -77,12 +79,13 @@ class CityController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:cities'
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->messages()
@@ -107,23 +110,24 @@ class CityController extends Controller
     //             'id' => $request->id
     //         ],
     //         [
-    //             'name' => $request->name, 
+    //             'name' => $request->name,
     //         ]);
 
     //     return response()->json(['success' => true]);
 
     //     // City::create($data);
-    //     // return redirect('/ciudades'); 
+    //     // return redirect('/ciudades');
     // }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $city = City::where('id', $id)->firstOrFail();
 
-        foreach ($city->flightsIncoming as $f){
+        foreach ($city->flightsIncoming as $f) {
             $f->delete();
         }
 
-        foreach ($city->flightsOutgoing as $f){
+        foreach ($city->flightsOutgoing as $f) {
             $f->delete();
         }
             
@@ -137,7 +141,7 @@ class CityController extends Controller
 
     // public function editCity(City $c, CreateCityRequest $request){
     //     $name = $request->input('name');
-    //     $cities = City::all(); 
+    //     $cities = City::all();
     //     $error = false;
     //     foreach($cities as $city){
     //         if (strcmp($city, $name) == 0){
@@ -156,7 +160,7 @@ class CityController extends Controller
     //     }
     //     exit;
     // }
-// model binding 
+// model binding
 // receive Request
 // request->all()
 
@@ -164,7 +168,7 @@ class CityController extends Controller
     //     $city = City::find($id);
     //     return view('edit_city', $city);
     // }
-    // public function save(City $city, CreateCityRequest $request){  
+    // public function save(City $city, CreateCityRequest $request){
     //     //retornar vista en realidad y despues tendria que validar todo esto
     //     $data = $request->validated();
     //     $city->update($data);

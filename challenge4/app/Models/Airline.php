@@ -9,11 +9,13 @@ class Airline extends Model
 {
     use HasFactory;
     protected $with = ['flights'];
-    public function flights(){
+    public function flights()
+    {
         return $this->hasMany(Flight::class);
     }
 
-    public function cities(){
+    public function cities()
+    {
         return $this->belongsToMany(City::class, 'airline_city');
     }
 }

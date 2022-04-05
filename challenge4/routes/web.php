@@ -32,7 +32,6 @@ Route::post('/updateCity/{id}', [CityController::class, 'update']);
 
 Route::delete('/deleteCity/{id}', [CityController::class, 'delete']);
 
-
 Route::get('/airlines', [AirlineController::class, 'index']);
 
 Route::post('/airlines', [AirlineController::class, 'store']);
