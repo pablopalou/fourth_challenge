@@ -21,7 +21,7 @@
             </div>
             <label for="description" class="block text-sm font-medium text-gray-700 mt-2">Description</label>
             <div class="mt-1 relative rounded-md shadow-sm">
-                <textarea rows="4" cols="4" name="description" id="editDescription" class="description block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
+                <textarea rows="4" cols="4" name="description" id="description" class="description block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
             </div>
             {{-- FALTA PONER LAS CIUDADES --}}
           </div>
@@ -51,9 +51,9 @@
             <div class="mt-1 relative rounded-md shadow-sm">
               <input type="name2" name="name2" id="editName" class="name2 block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md">
             </div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mt-2">Description</label>
+            <label for="editDescription" class="block text-sm font-medium text-gray-700 mt-2">Description</label>
             <div class="mt-1 relative rounded-md shadow-sm">
-                <textarea rows="4" cols="4" name="description" id="editDescription" class="description block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
+                <textarea rows="4" cols="4" name="editDescription" id="editDescription" class="editDescription block w-full pr-10 text-red-900 focus:outline-none sm:text-sm rounded-md"> </textarea>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@
       </div>
         
       <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opaairline-5 sm:-mx-6 md:mx-0 md:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-300">
+          <table class="min-w-full divide-y divide-gray-300" id="myTable">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">ID</th>
@@ -147,9 +147,9 @@
             });
             var info = await response.json();
             name.value = "";
-            document.getElementById('editDescription').value = "";
+            document.getElementById('description').value = "";
 
-            console.log(info);
+            // console.log(info);
             if (info.status == 400){
                 $('#saveform_errList').html("");
                 $('#saveform_errList').addClass('alert alert-danger');
@@ -167,6 +167,8 @@
 
             addToTable(info.airline);
           }
+
+
           function addToTable(item){
               var row = '<tr>\
                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">' +item.id + '</td>\
@@ -179,33 +181,42 @@
             const table = document.getElementById('airlinesTable').innerHTML += row;
           }
 
+          async function deleteAirline(){
+            //llamar al controlador
+            //eliminar de la tabla la fila seleccionada
+            const response = await fetch("/deleteairline/"+airline_id,{
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Content-Type': 'application/json'
+                }
+            });
+            var info = await response.json();
+            $('#success-message').addClass('alert alert-success');
+            $('#success-message').text(info.message);
+            $('#deleteairlineModal').modal('hide');
+
+            var table = document.getElementById("myTable");
+            for (var i = 1, row; row = table.rows[i]; i++) {
+                if (row.cells[0].innerText === airline_id) {
+                    document.getElementsByTagName("tr")[i].remove();
+                    break;
+                }
+            }
+          }
+
+          $(document).on('click', '.delete_airline', function(e){
+            e.preventDefault();
+            airline_id = $(this).val();
+            $('#delete_airline_id').val(airline_id);
+            $('#deleteairlineModal').modal('show');
+          });
+  
+
         $(document).ready(function(e) {
           var airline_id;
             fetchairlines();
           
-
-        //   $(document).on('click', '.add_airline', function(e){
-
-        //           if (response.status == 400){
-        //             $('#saveform_errList').html("");
-        //             $('#saveform_errList').addClass('alert alert-danger');
-
-        //             $.each(response.errors, function(key, err_val){
-        //               $('#saveform_errList').append('<li>'+err_val+'</li>');
-        //             });
-        //           } else {
-        //             $('#saveform_errList').html("");
-        //             $('#success-message').addClass('alert alert-success');
-        //             $('#success-message').text(response.message);
-        //             $('#addairlineModal').modal('hide');
-        //             $('#addairlineModal').find('input').val('');
-        //             fetchairlines();
-        //           }
-        //         } 
-
-        //       });
-        //     });
-  
           function fetchairlines(){
             $.ajax({
               type: "GET",
@@ -228,39 +239,10 @@
             });
           }
   
-          $(document).on('click', '.delete_airline', function(e){
-            e.preventDefault();
-            airline_id = $(this).val();
-            $('#delete_airline_id').val(airline_id);
-            $('#deleteairlineModal').modal('show');
-          });
-  
-          $(document).on('click', '.deletear_airline', function(e){
-            e.preventDefault();
-            airline_id = $('#delete_airline_id').val();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-  
-            $.ajax({
-              type: "DELETE",
-              url: "/deleteairline/"+airline_id,
-              success: function (response){
-                console.log(response);
-                $('#success-message').addClass('alert alert-success');
-                $('#success-message').text(response.message);
-                $('#deleteairlineModal').modal('hide');
-                fetchairlines();
-              }
-            });
+          
             
           });
 
-          
-  
-          
           $(document).on('click', '.edit_airline', function(e){
             e.preventDefault();
             airline_id = $(this).val();
@@ -276,52 +258,54 @@
             });
           });
   
+          async function updateAirline(){
+            let data = {
+                'id' : airline_id,
+                'name' : $('.name2').val(),
+                'description' : $('.editDescription').val()
+            };
+
+            const response = await fetch("/updateairline/"+airline_id,{
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            var info = await response.json();
+            if (info.status === 400){
+                $('#updateform_errList').html("");
+                $('#updateform_errList').addClass('alert alert-danger');
+
+                $.each(info.errors, function(key, err_val){
+                $('#updateform_errList').append('<li>'+err_val+'</li>');
+                });
+                $('.update_student').text('Update');
+            } else {
+                $('#updateform_errList').html("");
+                $('#success-message').addClass('alert alert-success');
+                $('#success-message').text(info.message);
+                $('#editairlineModal').find('input').val('');
+                $('.update_student').text('Update');
+                $('#editairlineModal').modal('hide');
+                // aca tengo que editar esa aerolinea
+                var table = document.getElementById("myTable");
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    if (row.cells[0].innerText === airline_id) {
+                        // var tr = document.getElementsByTagName("tr")[i];
+                        console.log($('#editName').val());
+                        document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].innerText = data.name;
+                        document.getElementsByTagName("tr")[i].getElementsByTagName("td")[2].innerText = $('.editDescription').val();
+                        break;
+                    }
+                }
+            }
+          }
+  
           
   
-          $(document).on('click', '.update_airline', function(e){
-            e.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-  
-            var data = JSON.stringify({
-              'id' : airline_id,
-              'name' : $('.name2').val(),
-              'description' : $('.description').val()
-            });
-  
-            $.ajax({
-              type: "POST",
-              url: "/updateairline/"+airline_id,
-              contentType: "application/json; charset=utf-8",
-              data: data,
-              dataType: "json",
-              success: function (response){
-                if (response.status === 400){
-                  $('#updateform_errList').html("");
-                  $('#updateform_errList').addClass('alert alert-danger');
-  
-                  $.each(response.errors, function(key, err_val){
-                    $('#updateform_errList').append('<li>'+err_val+'</li>');
-                  });
-                  $('.update_student').text('Update');
-                } else {
-                  $('#updateform_errList').html("");
-                  $('#success-message').addClass('alert alert-success');
-                  $('#success-message').text(response.message);
-                  $('#editairlineModal').find('input').val('');
-                  $('.update_student').text('Update');
-                  $('#editairlineModal').modal('hide');
-                  fetchairlines();
-                }
-              } 
-  
-            });
-          });
-  
-        });
+       
         
       </script>
     @endsection
