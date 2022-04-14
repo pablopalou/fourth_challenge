@@ -12,10 +12,6 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
-
-require('./components/Header');
-
-// FlightsAll is not working
+// require('./components/Example');
 
 require('./pages/FlightsAll');

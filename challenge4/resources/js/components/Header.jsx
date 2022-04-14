@@ -24,8 +24,3 @@ const Header = () => {
 }
 
 export default Header;
-
-// Solo para probar
-if (document.getElementById('pruebaHead')) {
-    ReactDOM.render(<Header />, document.getElementById('pruebaHead'));
-}

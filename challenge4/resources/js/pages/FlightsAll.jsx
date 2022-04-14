@@ -28,7 +28,7 @@ const FlightsAll = () => {
     );
 }
 
-export default Flights;
+export default FlightsAll;
 
 if (document.getElementById('flightsAll')) {
     ReactDOM.render(<FlightsAll />, document.getElementById('flightsAll'));
