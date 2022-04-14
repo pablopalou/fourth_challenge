@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
             'origin_id' => 1,
             'destination_id' => 3,
             'takeOff' => date("2020-2-20 16:30:45"),
-            'landing' => Carbon::now(),
+            'landing' => date("2020-2-21 05:30:45"),
             'airline_id' => 1
         ]);
         Flight::create([
             'origin_id' => City::factory()->create()->id,
             'destination_id' => City::factory()->create()->id,
             'takeOff' => date("2020-2-20 16:30:45"),
-            'landing' => Carbon::now(),
+            'landing' => date("2020-2-20 19:30:45"),
             'airline_id' => Airline::factory()->create()->id
         ]);
         $city = City::find(1);

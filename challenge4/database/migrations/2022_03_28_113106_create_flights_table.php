@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('origin_id')->references('id')->on('cities')->cascadeOnDelete();
             $table->foreignId('destination_id')->references('id')->on('cities')->cascadeOnDelete();
             
-            $table->time('takeOff');
-            $table->time('landing');
+            $table->dateTime('takeOff');
+            $table->dateTime('landing');
             
             $table->foreignId('airline_id')->references('id')->on('airlines')->cascadeOnDelete();
             

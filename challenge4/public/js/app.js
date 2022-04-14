@@ -5646,7 +5646,6 @@ var useGetFlights = function useGetFlights(route) {
 
           case 2:
             response = _context.sent;
-            // console.log(response.data['flights']);
             setFlights(response.data['flights']);
 
           case 4:
