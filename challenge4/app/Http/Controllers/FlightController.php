@@ -12,8 +12,8 @@ class FlightController extends Controller
     }
 
     public function getFlights(){    
-        $flights = Flight::paginate(10);
-        
+        // $flights = Flight::paginate(10);
+        $flights = Flight::all();
         return response()->json([
             'flights' => $flights
         ]);    

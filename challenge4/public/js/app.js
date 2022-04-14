@@ -5473,6 +5473,125 @@ var Header = function Header() {
 
 /***/ }),
 
+/***/ "./resources/js/components/TableHeader.jsx":
+/*!*************************************************!*\
+  !*** ./resources/js/components/TableHeader.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+var TableHeader = function TableHeader() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("thead", {
+    className: "bg-gray-50",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: "py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6",
+        children: "ID"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: " px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell",
+        children: "Airline"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: " px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell",
+        children: "Origin"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: "px-3 py-3.5 text-left text-sm font-semibold text-gray-900",
+        children: "Destination"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: "px-3 py-3.5 text-left text-sm font-semibold text-gray-900",
+        children: "Departure"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: "px-3 py-3.5 text-left text-sm font-semibold text-gray-900",
+        children: "Arrival"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
+        scope: "col",
+        className: "relative py-3.5 pl-3 pr-4 sm:pr-6"
+      })]
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TableHeader);
+
+/***/ }),
+
+/***/ "./resources/js/components/TableRow.jsx":
+/*!**********************************************!*\
+  !*** ./resources/js/components/TableRow.jsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+var TableRow = function TableRow(_ref) {
+  var flight = _ref.flight;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: [" ", flight.id, " "]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: flight.airline_id
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: flight.origin_id
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: flight.destination_id
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: flight.takeOff
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+      className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
+      children: flight.landing
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("td", {
+      children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        type: "button",
+        value: flight.id,
+        className: "btn btn-outline-primary btn-sm edit_city",
+        children: " Edit "
+      }), " "]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("td", {
+      children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        type: "button",
+        value: flight.id,
+        className: "btn btn-outline-danger btn-sm delete_city",
+        children: " Remove "
+      }), " "]
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TableRow);
+
+/***/ }),
+
 /***/ "./resources/js/hooks/useGetFlights.js":
 /*!*********************************************!*\
   !*** ./resources/js/hooks/useGetFlights.js ***!
@@ -5527,7 +5646,8 @@ var useGetFlights = function useGetFlights(route) {
 
           case 2:
             response = _context.sent;
-            setFlights(response.data);
+            // console.log(response.data['flights']);
+            setFlights(response.data['flights']);
 
           case 4:
           case "end":
@@ -5558,7 +5678,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.jsx");
 /* harmony import */ var _hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useGetFlights */ "./resources/js/hooks/useGetFlights.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_TableHeader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/TableHeader */ "./resources/js/components/TableHeader.jsx");
+/* harmony import */ var _components_TableRow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/TableRow */ "./resources/js/components/TableRow.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
 
 
 
@@ -5568,20 +5692,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var FlightsAll = function FlightsAll() {
-  // hacer un custom hook y obtener los flights
   var route = "http://127.0.0.1:8000/getFlights";
-  var flights = (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__["default"])(route); // const {getFlights} = React.useContext(AppContext);
-  // const flights = getFlights();
+  var flights = (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__["default"])(route); // console.log(vuelos);
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+  console.log(flights); // console.log("vuelos: ", vuelos);
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opaairline-5 sm:-mx-6 md:mx-0 md:rounded-lg",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("table", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("table", {
         className: "min-w-full divide-y divide-gray-300",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(TableHeader, {}), flights.map(function (flight) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(TableRows, {
-            flight: flight
-          }, flight.id);
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_TableHeader__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("tbody", {
+          className: "divide-y divide-gray-200 bg-white",
+          children: flights.map(function (flight) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_TableRow__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              flight: flight
+            }, flight.id);
+          })
         })]
       })
     })]
@@ -5591,7 +5718,7 @@ var FlightsAll = function FlightsAll() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FlightsAll);
 
 if (document.getElementById('flightsAll')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(FlightsAll, {}), document.getElementById('flightsAll'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(FlightsAll, {}), document.getElementById('flightsAll'));
 }
 
 /***/ }),

@@ -6,7 +6,8 @@ const useGetFlights = (route) => {
 
 	useEffect(async () => {
 		const response = await axios(route);
-		setFlights(response.data);
+        // console.log(response.data['flights']);
+		setFlights(response.data['flights']);
 	}, []);
 
 	return flights;
