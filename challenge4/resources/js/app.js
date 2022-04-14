@@ -13,3 +13,9 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+
+require('./components/Header');
+
+// FlightsAll is not working
+
+require('./pages/FlightsAll');
