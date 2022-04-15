@@ -3,6 +3,7 @@
 use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AirlineController;
+use App\Http\Controllers\FlightController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,7 @@ Route::get('/editairline/{id}', [AirlineController::class, 'edit']);
 Route::post('/updateairline/{id}', [AirlineController::class, 'update']);
 
 Route::delete('/deleteairline/{id}', [AirlineController::class, 'delete']);
+
+Route::get('/flights', [FlightController::class, 'index']);
+
+Route::get('/getFlights', [FlightController::class, 'getFlights']);
