@@ -112,4 +112,8 @@ class AirlineController extends Controller
             'message' => "Airline Deleted successfully"
         ]);
     }
+
+    public function getName($id){
+        return Airline::find($id)->name;
+    }
 }

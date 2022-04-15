@@ -13,16 +13,16 @@ class Flight extends Model
     #deberia encontrar esto porque todos se llaman nombreFuncion_id
     public function origin()
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class,'origin_id');
     }
 
     public function destination()
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class,'destination_id');
     }
 
     public function airline()
     {
-        return $this->hasOne(Airline::class);
+        return $this->belongsTo(Airline::class);
     }
 }

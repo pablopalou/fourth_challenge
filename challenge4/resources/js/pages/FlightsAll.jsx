@@ -9,10 +9,8 @@ const FlightsAll = () => {
 
     const route = "http://127.0.0.1:8000/getFlights";
     const flights = useGetFlights(route);
-
-    // console.log(vuelos);
     console.log(flights);
-    // console.log("vuelos: ", vuelos);
+
     return (
         <>
             <Header/>

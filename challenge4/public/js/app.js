@@ -5557,13 +5557,13 @@ var TableRow = function TableRow(_ref) {
       children: [" ", flight.id, " "]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
-      children: flight.airline_id
+      children: flight.airline.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
-      children: flight.origin_id
+      children: flight.origin.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
-      children: flight.destination_id
+      children: flight.destination.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
       className: "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6",
       children: flight.takeOff
@@ -5692,10 +5692,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var FlightsAll = function FlightsAll() {
   var route = "http://127.0.0.1:8000/getFlights";
-  var flights = (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__["default"])(route); // console.log(vuelos);
-
-  console.log(flights); // console.log("vuelos: ", vuelos);
-
+  var flights = (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__["default"])(route);
+  console.log(flights);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opaairline-5 sm:-mx-6 md:mx-0 md:rounded-lg",
