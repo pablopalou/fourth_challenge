@@ -19,7 +19,11 @@ const Header = () => {
     const [selectedAirline, setSelectedAirline] = React.useState("SELECT");
     const [selectedOrigin, setSelectedOrigin] = React.useState("SELECT");
     const [selectedDestination, setSelectedDestination] = React.useState("SELECT");
-    
+
+    let fechaActual = new Date().toJSON().slice(0,19);
+
+    // console.log(new Date().toJSON().slice(0,19));
+    // $("#departureCalendar").min = new Date().toJSON().slice(0,19);
 
     const cleanSecondCombobox = () => {
         $('#origin')
@@ -156,6 +160,7 @@ const Header = () => {
                                 type="datetime-local"
                                 id="departureCalendar"
                                 name="trip-end"
+                                min={fechaActual}
                                 // :min="minArrivalDate"
                                 // max="2022-12-31T00:00"
                                 // @change="setArrival"

@@ -7016,6 +7016,9 @@ var Header = function Header() {
       selectedDestination = _React$useState8[0],
       setSelectedDestination = _React$useState8[1];
 
+  var fechaActual = new Date().toJSON().slice(0, 19); // console.log(new Date().toJSON().slice(0,19));
+  // $("#departureCalendar").min = new Date().toJSON().slice(0,19);
+
   var cleanSecondCombobox = function cleanSecondCombobox() {
     $('#origin').empty().append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
   };
@@ -7171,7 +7174,8 @@ var Header = function Header() {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
                   type: "datetime-local",
                   id: "departureCalendar",
-                  name: "trip-end" // :min="minArrivalDate"
+                  name: "trip-end",
+                  min: fechaActual // :min="minArrivalDate"
                   // max="2022-12-31T00:00"
                   // @change="setArrival"
                   // :value="selectedArrival"
