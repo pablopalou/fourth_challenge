@@ -116,4 +116,12 @@ class AirlineController extends Controller
     public function getName($id){
         return Airline::find($id)->name;
     }
+
+    public function getAirlines(){    
+        // $airlines = Flight::paginate(10);
+        $airlines = Airline::with('cities')->get();
+        return response()->json([
+            'airlines' => $airlines
+        ]);    
+    }
 }

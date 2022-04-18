@@ -48,3 +48,5 @@ Route::delete('/deleteairline/{id}', [AirlineController::class, 'delete']);
 Route::get('/flights', [FlightController::class, 'index']);
 
 Route::get('/getFlights', [FlightController::class, 'getFlights']);
+
+Route::get('/getAirlines', [AirlineController::class, 'getAirlines']);
