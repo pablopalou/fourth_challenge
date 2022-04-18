@@ -1,7 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from "react-bootstrap/Button"
+import Modal from "react-bootstrap/Modal"
 
 const Header = () => {
+    const [showAdd, setShowAdd] = React.useState(false);
+
+    const handleCloseAdd = () => setShowAdd(false);
+    const handleShowAdd = () => setShowAdd(true);
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 m-3">
             <div className="sm:flex sm:items-center">
@@ -12,10 +19,25 @@ const Header = () => {
                 <div id="success-message">
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    {/* Falta hacer el boton de agregar con su respectivo pop up */}
-                    {/* <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#addflightModal">
+                    <Button variant="primary" onClick={handleShowAdd} className="btn btn-outline-primary btn-sm add_flight" >
                         Add flight
-                    </button> */}
+                    </Button>
+                    <>
+                    <Modal show={showAdd} onHide={handleCloseAdd}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseAdd}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleCloseAdd}>
+                            Save Changes
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+                    </>
                 </div>
             </div>
         </div>
