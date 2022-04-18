@@ -16,21 +16,21 @@ const Header = () => {
 
     const route = "http://127.0.0.1:8000/getAirlines";
     const airlines = useGetAirlines(route);
-    const [selectedAirline, setSelectedAirline] = React.useState("SELECCIONE");
-    const [selectedOrigin, setSelectedOrigin] = React.useState("SELECCIONE");
-    const [selectedDestination, setSelectedDestination] = React.useState("SELECCIONE");
+    const [selectedAirline, setSelectedAirline] = React.useState("SELECT");
+    const [selectedOrigin, setSelectedOrigin] = React.useState("SELECT");
+    const [selectedDestination, setSelectedDestination] = React.useState("SELECT");
     
 
     const cleanSecondCombobox = () => {
         $('#origin')
             .empty()
-            .append('<option key="SELECCIONE" selected="SELECCIONE" value="SELECCIONE">SELECCIONE</option>');
+            .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
     }
 
     const cleanThirdCombobox = () => {
         $('#destination')
             .empty()
-            .append('<option key="SELECCIONE" selected="SELECCIONE" value="SELECCIONE">SELECCIONE</option>');
+            .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
     }
 
     const fillCities = (event) => {
@@ -42,20 +42,19 @@ const Header = () => {
     };
 
     const fillSecondAndThird = (event) => {
-        if (event.target.value !== "SELECCIONE"){
+        if (event.target.value !== "SELECT"){
             {airlines.map(airline => {
                 // con === no funciona
                 if (airline.id == event.target.value ){ //aca antes comparaba con selectedAirline pero no se actualizaba
                     // tengo que cargar las ciudades
-                    console.log(airline);
+                    // console.log(airline);
                     {airline['cities'].map(city => {
                         $('#origin').append(`<option key="${city.id}" value="${city.id}">
                                                 ${city.name}
                                             </option>`);
-                        $('#destination').append(`<option key="${city.id}" value="${city.id}">
+                        $('#destination').append(`<option class="cl" key="${city.id}" value="${city.id}">
                                             ${city.name}
                                         </option>`);
-
                         }
                     )}
                     
@@ -66,11 +65,15 @@ const Header = () => {
     }
 
     const fillDestinations = (event) => {
-        setSelectedOrigin(event.value);
-        // cleanSecondCombobox();
-        // if (event.value !== "SELECCIONE"){
-        //     //agarrar las ciudades y meterlas en el combobox 2 (primero borrar este combobox)
-        // }
+        setSelectedOrigin(event.target.value);
+        // delete the destination that is the same as origin (if not SELECT)
+        if (event.target.value !== 'SELECT'){
+            $('#destination > option').each(function(){
+                if ($(this).val() == event.target.value){
+                    $(this).remove();
+                }
+            });
+        }
     };
 
     return (
@@ -105,7 +108,7 @@ const Header = () => {
                                 onChange={fillCities}
                                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                             >
-                                <option value="SELECCIONE" key='SELECCIONE'>SELECCIONE</option>
+                                <option value="SELECT" key='SELECT'>SELECT</option>
                                 {airlines.map(airline => (
                                     <option value={airline.id} key={airline.id}>{airline.name}</option>
                                 ))}
@@ -125,7 +128,7 @@ const Header = () => {
                                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                             >
                                 
-                                <option value="SELECCIONE" key='SELECCIONE'>SELECCIONE</option>
+                                <option value="SELECT" key='SELECT'>SELECT</option>
                                 <option value="sad" key='SELECCIOfdsNE'>mdeo</option>
                                 <option value="fdddd" key='SELECdsadCIONE'>selina</option>
                             </select>
@@ -139,9 +142,10 @@ const Header = () => {
                                 id="destination"
                                 name="destination"
                                 value={selectedDestination}
+                                onChange={(event) => setSelectedDestination(event.target.value)}
                                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                             >
-                                <option value="SELECCIONE" key='SELECCIONE'>SELECCIONE</option>
+                                <option value="SELECT" key='SELECT'>SELECT</option>
                             </select>
                             </div>
 

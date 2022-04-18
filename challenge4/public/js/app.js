@@ -7001,27 +7001,27 @@ var Header = function Header() {
   var route = "http://127.0.0.1:8000/getAirlines";
   var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_6__["default"])(route);
 
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECCIONE"),
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       selectedAirline = _React$useState4[0],
       setSelectedAirline = _React$useState4[1];
 
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECCIONE"),
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
       selectedOrigin = _React$useState6[0],
       setSelectedOrigin = _React$useState6[1];
 
-  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECCIONE"),
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState8 = _slicedToArray(_React$useState7, 2),
       selectedDestination = _React$useState8[0],
       setSelectedDestination = _React$useState8[1];
 
   var cleanSecondCombobox = function cleanSecondCombobox() {
-    $('#origin').empty().append('<option key="SELECCIONE" selected="SELECCIONE" value="SELECCIONE">SELECCIONE</option>');
+    $('#origin').empty().append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
   };
 
   var cleanThirdCombobox = function cleanThirdCombobox() {
-    $('#destination').empty().append('<option key="SELECCIONE" selected="SELECCIONE" value="SELECCIONE">SELECCIONE</option>');
+    $('#destination').empty().append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
   };
 
   var fillCities = function fillCities(event) {
@@ -7033,18 +7033,18 @@ var Header = function Header() {
   };
 
   var fillSecondAndThird = function fillSecondAndThird(event) {
-    if (event.target.value !== "SELECCIONE") {
+    if (event.target.value !== "SELECT") {
       {
         airlines.map(function (airline) {
           // con === no funciona
           if (airline.id == event.target.value) {
             //aca antes comparaba con selectedAirline pero no se actualizaba
             // tengo que cargar las ciudades
-            console.log(airline);
+            // console.log(airline);
             {
               airline['cities'].map(function (city) {
                 $('#origin').append("<option key=\"".concat(city.id, "\" value=\"").concat(city.id, "\">\n                                                ").concat(city.name, "\n                                            </option>"));
-                $('#destination').append("<option key=\"".concat(city.id, "\" value=\"").concat(city.id, "\">\n                                            ").concat(city.name, "\n                                        </option>"));
+                $('#destination').append("<option class=\"cl\" key=\"".concat(city.id, "\" value=\"").concat(city.id, "\">\n                                            ").concat(city.name, "\n                                        </option>"));
               });
             }
           }
@@ -7054,10 +7054,15 @@ var Header = function Header() {
   };
 
   var fillDestinations = function fillDestinations(event) {
-    setSelectedOrigin(event.value); // cleanSecondCombobox();
-    // if (event.value !== "SELECCIONE"){
-    //     //agarrar las ciudades y meterlas en el combobox 2 (primero borrar este combobox)
-    // }
+    setSelectedOrigin(event.target.value); // delete the destination that is the same as origin (if not SELECT)
+
+    if (event.target.value !== 'SELECT') {
+      $('#destination > option').each(function () {
+        if ($(this).val() == event.target.value) {
+          $(this).remove();
+        }
+      });
+    }
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -7104,9 +7109,9 @@ var Header = function Header() {
                   onChange: fillCities,
                   className: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                    value: "SELECCIONE",
-                    children: "SELECCIONE"
-                  }, 'SELECCIONE'), airlines.map(function (airline) {
+                    value: "SELECT",
+                    children: "SELECT"
+                  }, 'SELECT'), airlines.map(function (airline) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
                       value: airline.id,
                       children: airline.name
@@ -7125,9 +7130,9 @@ var Header = function Header() {
                   onChange: fillDestinations,
                   className: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                    value: "SELECCIONE",
-                    children: "SELECCIONE"
-                  }, 'SELECCIONE'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
+                    value: "SELECT",
+                    children: "SELECT"
+                  }, 'SELECT'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
                     value: "sad",
                     children: "mdeo"
                   }, 'SELECCIOfdsNE'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
@@ -7144,11 +7149,14 @@ var Header = function Header() {
                   id: "destination",
                   name: "destination",
                   value: selectedDestination,
+                  onChange: function onChange(event) {
+                    return setSelectedDestination(event.target.value);
+                  },
                   className: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("option", {
-                    value: "SELECCIONE",
-                    children: "SELECCIONE"
-                  }, 'SELECCIONE')
+                    value: "SELECT",
+                    children: "SELECT"
+                  }, 'SELECT')
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
                 style: {
