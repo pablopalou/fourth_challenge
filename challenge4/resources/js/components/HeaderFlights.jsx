@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
-import ComboBox from "react-widgets/Combobox"
-import DropdownList from "react-widgets/DropdownList"
-import DatePicker from "react-widgets/DatePicker"
+import ComboBox from "./ComboBox"
 import "react-widgets/styles.css"
 import useGetAirlines from '../hooks/useGetAirlines';
 
@@ -22,20 +20,26 @@ const HeaderFlights = () => {
     const [selectedOrigin, setSelectedOrigin] = React.useState("SELECT");
     const [selectedDestination, setSelectedDestination] = React.useState("SELECT");
 
+    const [origins, setOrigins] = React.useState(["SELECT"]);
+    const [destinations, setDestinations] = React.useState(["SELECT"]);
+
     let fechaActual = new Date().toJSON().slice(0,19);
 
     
 
     const cleanOriginCombobox = () => {
-        $('#origin')
-            .empty()
-            .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
+        setOrigins([]);
+        // funciona pero queda feo
+        // $('#origin')
+        //     .empty()
+        //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
     }
 
     const cleanDestinationCombobox = () => {
-        $('#destination')
-            .empty()
-            .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
+        setDestinations([]);
+        // $('#destination')
+        //     .empty()
+        //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
     }
 
     const fillCities = (event) => {
@@ -48,39 +52,63 @@ const HeaderFlights = () => {
 
     const fillSecondAndThird = (event) => {
         if (event.target.value !== "SELECT"){
+            // dada la aerolinea, llenar el origen y el destino.
             {airlines.map(airline => {
-                // con === no funciona
-                if (airline.id == event.target.value ){ //aca antes comparaba con selectedAirline pero no se actualizaba
-                    // tengo que cargar las ciudades
-                    // console.log(airline);
-                    {airline['cities'].map(city => {
-                        $('#origin').append(`<option key="${city.id}" value="${city.id}">
-                                                ${city.name}
-                                            </option>`);
-                        $('#destination').append(`<option class="cl" key="${city.id}" value="${city.id}">
-                                            ${city.name}
-                                        </option>`);
+                if (airline.id == event.target.value ){ 
+                    {airline['cities'].map( city => {
+                            // las podria guardar todas en un array asi despues las asigno todas juntas si es posible
+                            setOrigins(prev => [...prev, city]);
+                            setDestinations(prev => [...prev, city]);
                         }
-                    )}
-                    
-                } 
+                    )};
                 }
-            )}
+            })}
         }
     }
 
+            // funciona pero queda feo
+            // {airlines.map(airline => {
+            //     // con === no funciona
+            //     if (airline.id == event.target.value ){ //aca antes comparaba con selectedAirline pero no se actualizaba
+            //         // tengo que cargar las ciudades
+            //         // console.log(airline);
+            //         {airline['cities'].map(city => {
+            //             $('#origin').append(`<option key="${city.id}" value="${city.id}">
+            //                                     ${city.name}
+            //                                 </option>`);
+            //             $('#destination').append(`<option class="cl" key="${city.id}" value="${city.id}">
+            //                                 ${city.name}
+            //                             </option>`);
+            //             }
+            //         )}
+                    
+            //     } 
+            //     }
+            // )}
+        
+
     const fillDestinations = (event) => {
         setSelectedOrigin(event.target.value);
-        // delete the destination that is the same as origin (if not SELECT)
+        // delete from the destination state the event if it is not SELECT
         if (event.target.value !== 'SELECT'){
-            $('#destination > option').filter((o) => (o == event.target.value)).remove();
+            setDestinations(destinations.filter(destination => destination.id != event.target.value))
         }
+
+        // funciona pero queda feo
+        // delete the destination that is the same as origin (if not SELECT)
+        // if (event.target.value !== 'SELECT'){
+        //     $('#destination > option').filter((o) => (o == event.target.value)).remove();
+        // }
     };
 
     const updateArrivalMin = () => {
         var departureDate = document.getElementById("departureCalendar").value;
         document.getElementById("arrivalCalendar").value = "";
         document.getElementById("arrivalCalendar").setAttribute("min",departureDate);
+    }
+
+    const setSelectedDestinationn = (event) => {
+        setSelectedDestination(event.target.value);
     }
 
     return (
@@ -103,59 +131,23 @@ const HeaderFlights = () => {
                         </Modal.Header>
                         
                         <Modal.Body>
+                            <ComboBox name="airline"
+                                selectedValue={selectedAirline}
+                                onChangeDo={fillCities}
+                                airlines={airlines}
+                            ></ComboBox>
+
+                            <ComboBox name="origin"
+                                selectedValue={selectedOrigin}
+                                onChangeDo={fillDestinations}
+                                origins={origins}
+                            ></ComboBox>
                             
-                            <div>
-                            <label htmlFor="airline" className="block text-sm font-medium text-gray-700">
-                                Airline
-                            </label>
-                            <select
-                                id="airline"
-                                name="airline"
-                                value={selectedAirline}
-                                onChange={fillCities}
-                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            >
-                                <option value="SELECT" key='SELECT'>SELECT</option>
-                                {airlines.map(airline => (
-                                    <option value={airline.id} key={airline.id}>{airline.name}</option>
-                                ))}
-                            </select>
-                            </div>
-
-
-                            <div>
-                            <label htmlFor="origin" className="block text-sm font-medium text-gray-700">
-                                Origin
-                            </label>
-                            <select
-                                id="origin"
-                                name="origin"
-                                value={selectedOrigin}
-                                onChange={fillDestinations}
-                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            >
-                                
-                                <option value="SELECT" key='SELECT'>SELECT</option>
-                                <option value="sad" key='SELECCIOfdsNE'>mdeo</option>
-                                <option value="fdddd" key='SELECdsadCIONE'>selina</option>
-                            </select>
-                            </div>
-                            
-                            <div>
-                            <label htmlFor="destination" className="block text-sm font-medium text-gray-700">
-                                Destination
-                            </label>
-                            <select
-                                id="destination"
-                                name="destination"
-                                value={selectedDestination}
-                                onChange={(event) => setSelectedDestination(event.target.value)}
-                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                            >
-                                <option value="SELECT" key='SELECT'>SELECT</option>
-                            </select>
-                            </div>
-
+                            <ComboBox name="destination"
+                                selectedValue={selectedDestination}
+                                onChangeDo={setSelectedDestinationn}
+                                destinations={destinations}
+                            ></ComboBox>
 
                             <div className='mt-3'>
                             <label htmlFor="departureCalendar" className='mr-5'>Departure:</label>
