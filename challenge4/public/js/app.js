@@ -6938,10 +6938,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Header.jsx":
-/*!********************************************!*\
-  !*** ./resources/js/components/Header.jsx ***!
-  \********************************************/
+/***/ "./resources/js/components/HeaderFlights.jsx":
+/*!***************************************************!*\
+  !*** ./resources/js/components/HeaderFlights.jsx ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6984,7 +6984,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Header = function Header() {
+var HeaderFlights = function HeaderFlights() {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       showAdd = _React$useState2[0],
@@ -6998,7 +6998,8 @@ var Header = function Header() {
     return setShowAdd(true);
   };
 
-  var route = "http://127.0.0.1:8000/getAirlines";
+  var route = "http://127.0.0.1:8000/getAirlines"; // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
+
   var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_6__["default"])(route);
 
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
@@ -7016,22 +7017,21 @@ var Header = function Header() {
       selectedDestination = _React$useState8[0],
       setSelectedDestination = _React$useState8[1];
 
-  var fechaActual = new Date().toJSON().slice(0, 19); // console.log(new Date().toJSON().slice(0,19));
-  // $("#departureCalendar").min = new Date().toJSON().slice(0,19);
+  var fechaActual = new Date().toJSON().slice(0, 19);
 
-  var cleanSecondCombobox = function cleanSecondCombobox() {
+  var cleanOriginCombobox = function cleanOriginCombobox() {
     $('#origin').empty().append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
   };
 
-  var cleanThirdCombobox = function cleanThirdCombobox() {
+  var cleanDestinationCombobox = function cleanDestinationCombobox() {
     $('#destination').empty().append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
   };
 
   var fillCities = function fillCities(event) {
     setSelectedAirline(event.target.value); // React.useEffect(() => {}, [selectedAirline]);
 
-    cleanSecondCombobox();
-    cleanThirdCombobox();
+    cleanOriginCombobox();
+    cleanDestinationCombobox();
     fillSecondAndThird(event);
   };
 
@@ -7060,12 +7060,16 @@ var Header = function Header() {
     setSelectedOrigin(event.target.value); // delete the destination that is the same as origin (if not SELECT)
 
     if (event.target.value !== 'SELECT') {
-      $('#destination > option').each(function () {
-        if ($(this).val() == event.target.value) {
-          $(this).remove();
-        }
-      });
+      $('#destination > option').filter(function (o) {
+        return o == event.target.value;
+      }).remove();
     }
+  };
+
+  var updateArrivalMin = function updateArrivalMin() {
+    var departureDate = document.getElementById("departureCalendar").value;
+    document.getElementById("arrivalCalendar").value = "";
+    document.getElementById("arrivalCalendar").setAttribute("min", departureDate);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -7162,34 +7166,23 @@ var Header = function Header() {
                   }, 'SELECT')
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                style: {
-                  marginTop: "12px"
-                },
+                className: "mt-3",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
                   htmlFor: "departureCalendar",
-                  style: {
-                    marginRight: "20px"
-                  },
+                  className: "mr-5",
                   children: "Departure:"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
                   type: "datetime-local",
                   id: "departureCalendar",
                   name: "trip-end",
-                  min: fechaActual // :min="minArrivalDate"
-                  // max="2022-12-31T00:00"
-                  // @change="setArrival"
-                  // :value="selectedArrival"
-
+                  min: fechaActual,
+                  onChange: updateArrivalMin
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                style: {
-                  marginTop: "12px"
-                },
+                className: "mt-3",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
                   htmlFor: "arrivalCalendar",
-                  style: {
-                    marginRight: "20px"
-                  },
+                  className: "mr-5",
                   children: "Arrival:"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
                   type: "datetime-local",
@@ -7215,7 +7208,7 @@ var Header = function Header() {
   });
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFlights);
 
 /***/ }),
 
@@ -7630,7 +7623,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.jsx");
+/* harmony import */ var _components_HeaderFlights__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/HeaderFlights */ "./resources/js/components/HeaderFlights.jsx");
 /* harmony import */ var _hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useGetFlights */ "./resources/js/hooks/useGetFlights.js");
 /* harmony import */ var _components_TableHeader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/TableHeader */ "./resources/js/components/TableHeader.jsx");
 /* harmony import */ var _components_TableRow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/TableRow */ "./resources/js/components/TableRow.jsx");
@@ -7646,11 +7639,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var FlightsAll = function FlightsAll() {
+  // const { MIX_REACT_APP_HOME_ROUTE } = process.env;
+  // const route =  MIX_REACT_APP_HOME_ROUTE + "/getFlights";
   var route = "http://127.0.0.1:8000/getFlights";
   var flights = (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_3__["default"])(route); // console.log(flights);
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_HeaderFlights__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opaairline-5 sm:-mx-6 md:mx-0 md:rounded-lg",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("table", {
         className: "min-w-full divide-y divide-gray-300",

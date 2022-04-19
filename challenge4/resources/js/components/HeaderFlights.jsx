@@ -8,13 +8,15 @@ import DatePicker from "react-widgets/DatePicker"
 import "react-widgets/styles.css"
 import useGetAirlines from '../hooks/useGetAirlines';
 
-const Header = () => {
+const HeaderFlights = () => {
     const [showAdd, setShowAdd] = React.useState(false);
 
     const handleCloseAdd = () => setShowAdd(false);
     const handleShowAdd = () => setShowAdd(true);
 
-    const route = "http://127.0.0.1:8000/getAirlines";
+    const route = "http://127.0.0.1:8000/getAirlines"
+    // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
+    
     const airlines = useGetAirlines(route);
     const [selectedAirline, setSelectedAirline] = React.useState("SELECT");
     const [selectedOrigin, setSelectedOrigin] = React.useState("SELECT");
@@ -22,16 +24,15 @@ const Header = () => {
 
     let fechaActual = new Date().toJSON().slice(0,19);
 
-    // console.log(new Date().toJSON().slice(0,19));
-    // $("#departureCalendar").min = new Date().toJSON().slice(0,19);
+    
 
-    const cleanSecondCombobox = () => {
+    const cleanOriginCombobox = () => {
         $('#origin')
             .empty()
             .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
     }
 
-    const cleanThirdCombobox = () => {
+    const cleanDestinationCombobox = () => {
         $('#destination')
             .empty()
             .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
@@ -40,8 +41,8 @@ const Header = () => {
     const fillCities = (event) => {
         setSelectedAirline(event.target.value);
         // React.useEffect(() => {}, [selectedAirline]);
-        cleanSecondCombobox();
-        cleanThirdCombobox();
+        cleanOriginCombobox();
+        cleanDestinationCombobox();
         fillSecondAndThird(event);
     };
 
@@ -72,13 +73,15 @@ const Header = () => {
         setSelectedOrigin(event.target.value);
         // delete the destination that is the same as origin (if not SELECT)
         if (event.target.value !== 'SELECT'){
-            $('#destination > option').each(function(){
-                if ($(this).val() == event.target.value){
-                    $(this).remove();
-                }
-            });
+            $('#destination > option').filter((o) => (o == event.target.value)).remove();
         }
     };
+
+    const updateArrivalMin = () => {
+        var departureDate = document.getElementById("departureCalendar").value;
+        document.getElementById("arrivalCalendar").value = "";
+        document.getElementById("arrivalCalendar").setAttribute("min",departureDate);
+    }
 
     return (
         <div className="px-4 sm:px-6 lg:px-8 m-3">
@@ -154,21 +157,18 @@ const Header = () => {
                             </div>
 
 
-                            <div style={{marginTop: "12px"}}>
-                            <label htmlFor="departureCalendar" style={{marginRight: "20px"}}>Departure:</label>
+                            <div className='mt-3'>
+                            <label htmlFor="departureCalendar" className='mr-5'>Departure:</label>
                             <input
                                 type="datetime-local"
                                 id="departureCalendar"
                                 name="trip-end"
                                 min={fechaActual}
-                                // :min="minArrivalDate"
-                                // max="2022-12-31T00:00"
-                                // @change="setArrival"
-                                // :value="selectedArrival"
+                                onChange={updateArrivalMin}
                             />
                             </div>
-                            <div style={{marginTop: "12px"}}>
-                            <label htmlFor="arrivalCalendar" style={{marginRight: "20px"}}>Arrival:</label>
+                            <div className='mt-3'>
+                            <label htmlFor="arrivalCalendar" className='mr-5'>Arrival:</label>
                             <input
                                 type="datetime-local"
                                 id="arrivalCalendar"
@@ -196,4 +196,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default HeaderFlights;
