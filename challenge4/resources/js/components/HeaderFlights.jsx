@@ -5,8 +5,10 @@ import Modal from "react-bootstrap/Modal"
 import ComboBox from "./ComboBox"
 import "react-widgets/styles.css"
 import useGetAirlines from '../hooks/useGetAirlines';
+import axios from 'axios';
 
-const HeaderFlights = () => {
+const HeaderFlights = (props) => {
+    // console.log(props);
     const [showAdd, setShowAdd] = React.useState(false);
 
     const handleCloseAdd = () => setShowAdd(false);
@@ -23,30 +25,55 @@ const HeaderFlights = () => {
     const [origins, setOrigins] = React.useState(["SELECT"]);
     const [destinations, setDestinations] = React.useState(["SELECT"]);
 
-    let fechaActual = new Date().toJSON().slice(0,19);
+    let actualDate = new Date().toJSON().slice(0,19);
 
-    
+    const handleSaveAdd = (event) => {
+        event.preventDefault();
 
-    const cleanOriginCombobox = () => {
-        setOrigins([]);
-        // funciona pero queda feo
-        // $('#origin')
-        //     .empty()
-        //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
+        const flightInfo = {
+            airlineId : event.target[0].value,
+            originId : event.target[1].value,
+            destinationId : event.target[2].value,
+            takeOff: event.target[3].value,
+            landing: event.target[4].value 
+        };
+        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT"){
+            const response = axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
+            .then(response => {
+                handleCloseAdd();
+                props.setFlights(prev => [...prev, response.data.flight]);
+            })
+            .catch(err => console.warn(err));
+        } else {
+            //decirle al loco que no puede seleccionar SELECT (buscar toat alert)
+
+        }
+        
+        
+        // hacer algo con el mensaje
     }
 
-    const cleanDestinationCombobox = () => {
-        setDestinations([]);
-        // $('#destination')
-        //     .empty()
-        //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
-    }
+    // const cleanOriginCombobox = () => {
+    //     setOrigins([]);
+    //     // funciona pero queda feo
+    //     // $('#origin')
+    //     //     .empty()
+    //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
+    // }
+
+    // const cleanDestinationCombobox = () => {
+    //     setDestinations([]);
+    //     // $('#destination')
+    //     //     .empty()
+    //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
+    // }
 
     const fillCities = (event) => {
         setSelectedAirline(event.target.value);
         // React.useEffect(() => {}, [selectedAirline]);
-        cleanOriginCombobox();
-        cleanDestinationCombobox();
+        // al asignar directo todo el array de vuelta, no es necesario limpiar
+        // cleanOriginCombobox();
+        // cleanDestinationCombobox();
         fillSecondAndThird(event);
     };
 
@@ -55,12 +82,17 @@ const HeaderFlights = () => {
             // dada la aerolinea, llenar el origen y el destino.
             {airlines.map(airline => {
                 if (airline.id == event.target.value ){ 
-                    {airline['cities'].map( city => {
-                            // las podria guardar todas en un array asi despues las asigno todas juntas si es posible
-                            setOrigins(prev => [...prev, city]);
-                            setDestinations(prev => [...prev, city]);
-                        }
-                    )};
+                    // console.log(airline);
+                    setOrigins(airline.cities);
+                    setDestinations(airline.cities);
+
+                    // No hay que agregar una por una... mas facil poner el array de una
+                    // {airline['cities'].map( city => {
+                    //         // las podria guardar todas en un array asi despues las asigno todas juntas si es posible
+                    //         setOrigins(prev => [...prev, city]);
+                    //         setDestinations(prev => [...prev, city]);
+                    //     }
+                    // )};
                 }
             })}
         }
@@ -89,6 +121,7 @@ const HeaderFlights = () => {
 
     const fillDestinations = (event) => {
         setSelectedOrigin(event.target.value);
+        // deberia agarrar la aerolinea seleccionada y cargar todo de vuelta y despues si filtrar
         // delete from the destination state the event if it is not SELECT
         if (event.target.value !== 'SELECT'){
             setDestinations(destinations.filter(destination => destination.id != event.target.value))
@@ -131,43 +164,46 @@ const HeaderFlights = () => {
                         </Modal.Header>
                         
                         <Modal.Body>
-                            <ComboBox name="airline"
-                                selectedValue={selectedAirline}
-                                onChangeDo={fillCities}
-                                airlines={airlines}
-                            ></ComboBox>
+                            <form id="add-form" onSubmit={handleSaveAdd}>
+                                <ComboBox name="airline"
+                                    selectedValue={selectedAirline}
+                                    onChangeDo={fillCities}
+                                    airlines={airlines}
+                                ></ComboBox>
 
-                            <ComboBox name="origin"
-                                selectedValue={selectedOrigin}
-                                onChangeDo={fillDestinations}
-                                origins={origins}
-                            ></ComboBox>
-                            
-                            <ComboBox name="destination"
-                                selectedValue={selectedDestination}
-                                onChangeDo={setSelectedDestinationn}
-                                destinations={destinations}
-                            ></ComboBox>
-
-                            <div className='mt-3'>
-                            <label htmlFor="departureCalendar" className='mr-5'>Departure:</label>
-                            <input
-                                type="datetime-local"
-                                id="departureCalendar"
-                                name="trip-end"
-                                min={fechaActual}
-                                onChange={updateArrivalMin}
-                            />
-                            </div>
-                            <div className='mt-3'>
-                            <label htmlFor="arrivalCalendar" className='mr-5'>Arrival:</label>
-                            <input
-                                type="datetime-local"
-                                id="arrivalCalendar"
-                                name="trip-end"
+                                <ComboBox name="origin"
+                                    selectedValue={selectedOrigin}
+                                    onChangeDo={fillDestinations}
+                                    cities={origins}
+                                ></ComboBox>
                                 
-                            />
-                            </div>
+                                <ComboBox name="destination"
+                                    selectedValue={selectedDestination}
+                                    onChangeDo={setSelectedDestinationn}
+                                    cities={destinations}
+                                ></ComboBox>
+
+                                <div className='mt-3'>
+                                <label htmlFor="departureCalendar" className='mr-5'>Departure:</label>
+                                <input
+                                    type="datetime-local"
+                                    id="departureCalendar"
+                                    name="departureCalendar"
+                                    min={actualDate}
+                                    onChange={updateArrivalMin}
+                                />
+                                </div>
+                                <div className='mt-3'>
+                                <label htmlFor="arrivalCalendar" className='mr-5'>Arrival:</label>
+                                <input
+                                    type="datetime-local"
+                                    id="arrivalCalendar"
+                                    name="arrivalCalendar"
+                                    
+                                />
+                                </div>
+                            
+                            </form>
                             
                         </Modal.Body>
                         
@@ -175,7 +211,7 @@ const HeaderFlights = () => {
                         <Button variant="btn btn-outline-secondary" onClick={handleCloseAdd}>
                             Close
                         </Button>
-                        <Button variant="btn btn-outline-primary" onClick={handleCloseAdd}>
+                        <Button type="submit" form='add-form' variant="btn btn-outline-primary">
                             Save Changes
                         </Button>
                         </Modal.Footer>

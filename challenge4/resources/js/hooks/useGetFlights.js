@@ -9,7 +9,7 @@ const useGetFlights = (route) => {
 		setFlights(response.data['flights']);
 	}, []);
 
-	return flights;
+	return {flights, setFlights};
 };
 
 export default useGetFlights;

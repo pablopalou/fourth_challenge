@@ -1,9 +1,17 @@
 import React from 'react';
 
+// ERROR: Interface declarations solo sirven en un archivo de Typescript
+// interface ComboBoxProps {
+//     airlines? ;
+//     comboBoxName: String;
+//     cities? ;
+// }
+
 const ComboBox = (props) => {
     const airlines = props.airlines;
+    const cities = props.cities;
     const comboBoxName = props.name;
-    console.log(comboBoxName);
+    // console.log(comboBoxName);
     return (
         <div>
             <label htmlFor={props.name} className="block text-sm font-medium text-gray-700">
@@ -22,7 +30,12 @@ const ComboBox = (props) => {
                         <option value={airline.id} key={airline.id}>{airline.name}</option>
                     ))
                 }
-                {comboBoxName == "origin" && 
+                {cities !== undefined && 
+                    props.cities.map(city => (
+                        <option value={city.id} key={`${comboBoxName}-${city.id}`}>{city.name}</option>
+                    ))
+                }
+                {/* {comboBoxName == "origin" && 
                     props.origins.map(city => (
                         <option value={city.id} key={`origin-${city.id}`}>{city.name}</option>
                     ))
@@ -31,7 +44,7 @@ const ComboBox = (props) => {
                     props.destinations.map(city => (
                         <option value={city.id} key={`destination-${city.id}`}>{city.name}</option>
                     ))
-                }
+                } */}
             </select>
         </div> 
     );

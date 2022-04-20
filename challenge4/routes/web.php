@@ -50,3 +50,6 @@ Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/getFlights', [FlightController::class, 'getFlights']);
 
 Route::get('/getAirlines', [AirlineController::class, 'getAirlines']);
+
+Route::post('/flights', [FlightController::class, 'store']);
+
