@@ -6,6 +6,7 @@ import ComboBox from "./ComboBox"
 import "react-widgets/styles.css"
 import useGetAirlines from '../hooks/useGetAirlines';
 import axios from 'axios';
+import Toast from 'react-bootstrap/Toast'
 
 const HeaderFlights = (props) => {
     // console.log(props);
@@ -25,11 +26,14 @@ const HeaderFlights = (props) => {
     const [origins, setOrigins] = React.useState(["SELECT"]);
     const [destinations, setDestinations] = React.useState(["SELECT"]);
 
+    const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
+
     let actualDate = new Date().toJSON().slice(0,19);
 
     const handleSaveAdd = (event) => {
         event.preventDefault();
-
+        setError(false);
         const flightInfo = {
             airlineId : event.target[0].value,
             originId : event.target[1].value,
@@ -37,16 +41,20 @@ const HeaderFlights = (props) => {
             takeOff: event.target[3].value,
             landing: event.target[4].value 
         };
-        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT"){
+        console.log(flightInfo);
+        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != undefined && flightInfo.landing != undefined ){
             const response = axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
             .then(response => {
                 handleCloseAdd();
                 props.setFlights(prev => [...prev, response.data.flight]);
             })
             .catch(err => console.warn(err));
+        } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
+            setError(true);
+            setErrorMessage("You must fill the form with valid takeOff and landing dates.");
         } else {
-            //decirle al loco que no puede seleccionar SELECT (buscar toat alert)
-
+            setError(true);
+            setErrorMessage("You must select a valid airline and also valid cities.");
         }
         
         
@@ -164,6 +172,13 @@ const HeaderFlights = (props) => {
                         </Modal.Header>
                         
                         <Modal.Body>
+                            {error && <Toast className='mb-3 bg-red-500'>
+                                    <Toast.Header>
+                                        <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+                                        <strong className="me-auto">ERROR</strong>
+                                    </Toast.Header>
+                                    <Toast.Body>{errorMessage}</Toast.Body>
+                                    </Toast>}
                             <form id="add-form" onSubmit={handleSaveAdd}>
                                 <ComboBox name="airline"
                                     selectedValue={selectedAirline}

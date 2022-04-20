@@ -24,11 +24,13 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@heroicons/react": "^1.0.6",
         "css": "^3.0.0",
         "dotenv": "^16.0.0",
         "mix-env-file": "^0.1.1",
         "react-bootstrap": "^2.2.3",
         "react-router-dom": "^6.3.0",
+        "react-toast": "^1.0.3",
         "react-widgets": "^5.8.4"
     }
 }
