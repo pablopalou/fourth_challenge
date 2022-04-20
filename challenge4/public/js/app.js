@@ -6582,13 +6582,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var _ComboBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ComboBox */ "./resources/js/components/ComboBox.jsx");
-/* harmony import */ var react_widgets_styles_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-widgets/styles.css */ "./node_modules/react-widgets/styles.css");
-/* harmony import */ var _hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useGetAirlines */ "./resources/js/hooks/useGetAirlines.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_widgets_styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-widgets/styles.css */ "./node_modules/react-widgets/styles.css");
+/* harmony import */ var _hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useGetAirlines */ "./resources/js/hooks/useGetAirlines.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _ModalCrud__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ModalCrud */ "./resources/js/components/ModalCrud.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -6620,9 +6618,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-
-
 var HeaderFlights = function HeaderFlights(props) {
   // console.log(props);
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
@@ -6640,7 +6635,7 @@ var HeaderFlights = function HeaderFlights(props) {
 
   var route = "http://127.0.0.1:8000/getAirlines"; // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
 
-  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_4__["default"])(route);
+  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_3__["default"])(route);
 
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -6691,12 +6686,18 @@ var HeaderFlights = function HeaderFlights(props) {
     };
     console.log(flightInfo);
 
-    if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != undefined && flightInfo.landing != undefined) {
-      var response = axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
+    if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
+      var response = axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
         handleCloseAdd();
         props.setFlights(function (prev) {
           return [].concat(_toConsumableArray(prev), [response.data.flight]);
-        });
+        }); // vuelvo a setear las cosas a select.
+
+        setSelectedAirline(["SELECT"]);
+        setSelectedOrigin(["SELECT"]);
+        setSelectedDestination(["SELECT"]);
+        setOrigins(["SELECT"]);
+        setDestinations(["SELECT"]);
       })["catch"](function (err) {
         return console.warn(err);
       });
@@ -6819,87 +6820,23 @@ var HeaderFlights = function HeaderFlights(props) {
           onClick: handleShowAdd,
           className: "btn btn-outline-primary btn-sm add_flight",
           children: "Add flight"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__["default"], {
-            show: showAdd,
-            onHide: handleCloseAdd,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__["default"].Header, {
-              closeButton: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__["default"].Title, {
-                children: "Add a new flight"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__["default"].Body, {
-              children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_9__["default"], {
-                className: "mb-3 bg-red-500",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_9__["default"].Header, {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                    src: "holder.js/20x20?text=%20",
-                    className: "rounded me-2",
-                    alt: ""
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
-                    className: "me-auto",
-                    children: "ERROR"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_9__["default"].Body, {
-                  children: errorMessage
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
-                id: "add-form",
-                onSubmit: handleSaveAdd,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                  name: "airline",
-                  selectedValue: selectedAirline,
-                  onChangeDo: fillCities,
-                  airlines: airlines
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                  name: "origin",
-                  selectedValue: selectedOrigin,
-                  onChangeDo: fillDestinations,
-                  cities: origins
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                  name: "destination",
-                  selectedValue: selectedDestination,
-                  onChangeDo: setSelectedDestinationn,
-                  cities: destinations
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: "mt-3",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                    htmlFor: "departureCalendar",
-                    className: "mr-5",
-                    children: "Departure:"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                    type: "datetime-local",
-                    id: "departureCalendar",
-                    name: "departureCalendar",
-                    min: actualDate,
-                    onChange: updateArrivalMin
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: "mt-3",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                    htmlFor: "arrivalCalendar",
-                    className: "mr-5",
-                    children: "Arrival:"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                    type: "datetime-local",
-                    id: "arrivalCalendar",
-                    name: "arrivalCalendar"
-                  })]
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_8__["default"].Footer, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
-                variant: "btn btn-outline-secondary",
-                onClick: handleCloseAdd,
-                children: "Close"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
-                type: "submit",
-                form: "add-form",
-                variant: "btn btn-outline-primary",
-                children: "Save Changes"
-              })]
-            })]
-          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          selectedAirline: selectedAirline,
+          selectedDestination: selectedDestination,
+          selectedOrigin: selectedOrigin,
+          showAdd: showAdd,
+          handleCloseAdd: handleCloseAdd,
+          error: error,
+          errorMessage: errorMessage,
+          handleSaveAdd: handleSaveAdd,
+          fillCities: fillCities,
+          airlines: airlines,
+          fillDestinations: fillDestinations,
+          origins: origins,
+          destinations: destinations,
+          setSelectedDestinationn: setSelectedDestinationn,
+          actualDate: actualDate,
+          updateArrivalMin: updateArrivalMin
         })]
       })]
     })
@@ -6907,6 +6844,134 @@ var HeaderFlights = function HeaderFlights(props) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFlights);
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalCrud.jsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ModalCrud.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var _ComboBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComboBox */ "./resources/js/components/ComboBox.jsx");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+var ModalCrud = function ModalCrud(props) {
+  var selectedAirline = props.selectedAirline,
+      selectedDestination = props.selectedDestination,
+      selectedOrigin = props.selectedOrigin,
+      showAdd = props.showAdd,
+      handleCloseAdd = props.handleCloseAdd,
+      error = props.error,
+      errorMessage = props.errorMessage,
+      handleSaveAdd = props.handleSaveAdd,
+      fillCities = props.fillCities,
+      airlines = props.airlines,
+      fillDestinations = props.fillDestinations,
+      origins = props.origins,
+      destinations = props.destinations,
+      setSelectedDestinationn = props.setSelectedDestinationn,
+      actualDate = props.actualDate,
+      updateArrivalMin = props.updateArrivalMin;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    show: showAdd,
+    onHide: handleCloseAdd,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Header, {
+      closeButton: true,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Title, {
+        children: "Add a new flight"
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Body, {
+      children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        className: "mb-3 bg-red-500",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"].Header, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: "holder.js/20x20?text=%20",
+            className: "rounded me-2",
+            alt: ""
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+            className: "me-auto",
+            children: "ERROR"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"].Body, {
+          children: errorMessage
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+        id: "add-form",
+        onSubmit: handleSaveAdd,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          name: "airline",
+          selectedValue: selectedAirline,
+          onChangeDo: fillCities,
+          airlines: airlines
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          name: "origin",
+          selectedValue: selectedOrigin,
+          onChangeDo: fillDestinations,
+          cities: origins
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          name: "destination",
+          selectedValue: selectedDestination,
+          onChangeDo: setSelectedDestinationn,
+          cities: destinations
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "mt-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+            htmlFor: "departureCalendar",
+            className: "mr-5",
+            children: "Departure:"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            type: "datetime-local",
+            id: "departureCalendar",
+            name: "departureCalendar",
+            min: actualDate,
+            onChange: updateArrivalMin
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "mt-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+            htmlFor: "arrivalCalendar",
+            className: "mr-5",
+            children: "Arrival:"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            type: "datetime-local",
+            id: "arrivalCalendar",
+            name: "arrivalCalendar"
+          })]
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Footer, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        variant: "btn btn-outline-secondary",
+        onClick: handleCloseAdd,
+        children: "Close"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        type: "submit",
+        form: "add-form",
+        variant: "btn btn-outline-primary",
+        children: "Save Changes"
+      })]
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ModalCrud);
 
 /***/ }),
 

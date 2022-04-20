@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from "react-bootstrap/Button"
-import Modal from "react-bootstrap/Modal"
-import ComboBox from "./ComboBox"
-import "react-widgets/styles.css"
+import Button from "react-bootstrap/Button";
+
+import "react-widgets/styles.css";
 import useGetAirlines from '../hooks/useGetAirlines';
 import axios from 'axios';
-import Toast from 'react-bootstrap/Toast'
+import ModalCrud from './ModalCrud';
+
 
 const HeaderFlights = (props) => {
     // console.log(props);
@@ -42,11 +42,18 @@ const HeaderFlights = (props) => {
             landing: event.target[4].value 
         };
         console.log(flightInfo);
-        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != undefined && flightInfo.landing != undefined ){
+        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '' ){
             const response = axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
             .then(response => {
                 handleCloseAdd();
                 props.setFlights(prev => [...prev, response.data.flight]);
+                // vuelvo a setear las cosas a select.
+                setSelectedAirline(["SELECT"]);
+                setSelectedOrigin(["SELECT"]);
+                setSelectedDestination(["SELECT"]);
+                setOrigins(["SELECT"]);
+                setDestinations(["SELECT"]);
+
             })
             .catch(err => console.warn(err));
         } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
@@ -165,73 +172,27 @@ const HeaderFlights = (props) => {
                     <Button variant="primary" onClick={handleShowAdd} className="btn btn-outline-primary btn-sm add_flight" >
                         Add flight
                     </Button>
-                    <>
-                    <Modal show={showAdd} onHide={handleCloseAdd}>
-                        <Modal.Header closeButton>
-                        <Modal.Title>Add a new flight</Modal.Title>
-                        </Modal.Header>
-                        
-                        <Modal.Body>
-                            {error && <Toast className='mb-3 bg-red-500'>
-                                    <Toast.Header>
-                                        <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                                        <strong className="me-auto">ERROR</strong>
-                                    </Toast.Header>
-                                    <Toast.Body>{errorMessage}</Toast.Body>
-                                    </Toast>}
-                            <form id="add-form" onSubmit={handleSaveAdd}>
-                                <ComboBox name="airline"
-                                    selectedValue={selectedAirline}
-                                    onChangeDo={fillCities}
-                                    airlines={airlines}
-                                ></ComboBox>
+                    <ModalCrud
+                        selectedAirline={selectedAirline}
+                        selectedDestination={selectedDestination}
+                        selectedOrigin={selectedOrigin}
+                        showAdd={showAdd}
+                        handleCloseAdd={handleCloseAdd}
+                        error={error}
+                        errorMessage={errorMessage}
+                        handleSaveAdd={handleSaveAdd}
+                        fillCities={fillCities}
+                        airlines={airlines}
+                        fillDestinations={fillDestinations}
+                        origins={origins}
+                        destinations={destinations}
+                        setSelectedDestinationn={setSelectedDestinationn}
+                        actualDate={actualDate}
+                        updateArrivalMin={updateArrivalMin}
 
-                                <ComboBox name="origin"
-                                    selectedValue={selectedOrigin}
-                                    onChangeDo={fillDestinations}
-                                    cities={origins}
-                                ></ComboBox>
-                                
-                                <ComboBox name="destination"
-                                    selectedValue={selectedDestination}
-                                    onChangeDo={setSelectedDestinationn}
-                                    cities={destinations}
-                                ></ComboBox>
+                    >
 
-                                <div className='mt-3'>
-                                <label htmlFor="departureCalendar" className='mr-5'>Departure:</label>
-                                <input
-                                    type="datetime-local"
-                                    id="departureCalendar"
-                                    name="departureCalendar"
-                                    min={actualDate}
-                                    onChange={updateArrivalMin}
-                                />
-                                </div>
-                                <div className='mt-3'>
-                                <label htmlFor="arrivalCalendar" className='mr-5'>Arrival:</label>
-                                <input
-                                    type="datetime-local"
-                                    id="arrivalCalendar"
-                                    name="arrivalCalendar"
-                                    
-                                />
-                                </div>
-                            
-                            </form>
-                            
-                        </Modal.Body>
-                        
-                        <Modal.Footer>
-                        <Button variant="btn btn-outline-secondary" onClick={handleCloseAdd}>
-                            Close
-                        </Button>
-                        <Button type="submit" form='add-form' variant="btn btn-outline-primary">
-                            Save Changes
-                        </Button>
-                        </Modal.Footer>
-                    </Modal>
-                    </>
+                    </ModalCrud>
                 </div>
             </div>
         </div>
