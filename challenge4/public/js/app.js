@@ -6581,13 +6581,102 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var react_widgets_styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-widgets/styles.css */ "./node_modules/react-widgets/styles.css");
-/* harmony import */ var _hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useGetAirlines */ "./resources/js/hooks/useGetAirlines.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _ModalCrud__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ModalCrud */ "./resources/js/components/ModalCrud.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _ModalCrud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ModalCrud */ "./resources/js/components/ModalCrud.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+var HeaderFlights = function HeaderFlights(props) {
+  var setFlights = props.setFlights;
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      showAdd = _React$useState2[0],
+      setShowAdd = _React$useState2[1];
+
+  var handleCloseAdd = function handleCloseAdd() {
+    return setShowAdd(false);
+  };
+
+  var handleShowAdd = function handleShowAdd() {
+    return setShowAdd(true);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: "px-4 sm:px-6 lg:px-8 m-3",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "sm:flex sm:items-center",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "sm:flex-auto",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+          className: "text-xl font-semibold text-gray-900",
+          children: "Flights"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "mt-2 text-sm text-gray-700",
+          children: "A list of all the flights in Despegar!"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        id: "success-message"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "mt-4 sm:mt-0 sm:ml-16 sm:flex-none",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          variant: "primary",
+          onClick: handleShowAdd,
+          className: "btn btn-outline-primary btn-sm add_flight",
+          children: "Add flight"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          showAdd: showAdd,
+          handleCloseAdd: handleCloseAdd,
+          setFlights: setFlights
+        })]
+      })]
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFlights);
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalCrud.jsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ModalCrud.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var _ComboBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComboBox */ "./resources/js/components/ComboBox.jsx");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var _hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useGetAirlines */ "./resources/js/hooks/useGetAirlines.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6618,59 +6707,48 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var HeaderFlights = function HeaderFlights(props) {
-  // console.log(props);
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      showAdd = _React$useState2[0],
-      setShowAdd = _React$useState2[1];
-
-  var handleCloseAdd = function handleCloseAdd() {
-    return setShowAdd(false);
-  };
-
-  var handleShowAdd = function handleShowAdd() {
-    return setShowAdd(true);
-  };
-
+var ModalCrud = function ModalCrud(props) {
+  var handleCloseAdd = props.handleCloseAdd,
+      showAdd = props.showAdd,
+      setFlights = props.setFlights;
   var route = "http://127.0.0.1:8000/getAirlines"; // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
 
-  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_3__["default"])(route);
+  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__["default"])(route);
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      selectedAirline = _React$useState2[0],
+      setSelectedAirline = _React$useState2[1];
 
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      selectedAirline = _React$useState4[0],
-      setSelectedAirline = _React$useState4[1];
+      selectedOrigin = _React$useState4[0],
+      setSelectedOrigin = _React$useState4[1];
 
   var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      selectedOrigin = _React$useState6[0],
-      setSelectedOrigin = _React$useState6[1];
+      selectedDestination = _React$useState6[0],
+      setSelectedDestination = _React$useState6[1];
 
-  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState8 = _slicedToArray(_React$useState7, 2),
-      selectedDestination = _React$useState8[0],
-      setSelectedDestination = _React$useState8[1];
+      origins = _React$useState8[0],
+      setOrigins = _React$useState8[1];
 
   var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState10 = _slicedToArray(_React$useState9, 2),
-      origins = _React$useState10[0],
-      setOrigins = _React$useState10[1];
+      destinations = _React$useState10[0],
+      setDestinations = _React$useState10[1];
 
-  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
+  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
       _React$useState12 = _slicedToArray(_React$useState11, 2),
-      destinations = _React$useState12[0],
-      setDestinations = _React$useState12[1];
+      error = _React$useState12[0],
+      setError = _React$useState12[1];
 
-  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
       _React$useState14 = _slicedToArray(_React$useState13, 2),
-      error = _React$useState14[0],
-      setError = _React$useState14[1];
-
-  var _React$useState15 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
-      _React$useState16 = _slicedToArray(_React$useState15, 2),
-      errorMessage = _React$useState16[0],
-      setErrorMessage = _React$useState16[1];
+      errorMessage = _React$useState14[0],
+      setErrorMessage = _React$useState14[1];
 
   var actualDate = new Date().toJSON().slice(0, 19);
 
@@ -6687,9 +6765,9 @@ var HeaderFlights = function HeaderFlights(props) {
     console.log(flightInfo);
 
     if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
-      var response = axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
+      var response = axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
         handleCloseAdd();
-        props.setFlights(function (prev) {
+        setFlights(function (prev) {
           return [].concat(_toConsumableArray(prev), [response.data.flight]);
         }); // vuelvo a setear las cosas a select.
 
@@ -6796,172 +6874,85 @@ var HeaderFlights = function HeaderFlights(props) {
 
   var setSelectedDestinationn = function setSelectedDestinationn(event) {
     setSelectedDestination(event.target.value);
-  };
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-    className: "px-4 sm:px-6 lg:px-8 m-3",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "sm:flex sm:items-center",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "sm:flex-auto",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
-          className: "text-xl font-semibold text-gray-900",
-          children: "Flights"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-          className: "mt-2 text-sm text-gray-700",
-          children: "A list of all the flights in Despegar!"
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        id: "success-message"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "mt-4 sm:mt-0 sm:ml-16 sm:flex-none",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          variant: "primary",
-          onClick: handleShowAdd,
-          className: "btn btn-outline-primary btn-sm add_flight",
-          children: "Add flight"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          selectedAirline: selectedAirline,
-          selectedDestination: selectedDestination,
-          selectedOrigin: selectedOrigin,
-          showAdd: showAdd,
-          handleCloseAdd: handleCloseAdd,
-          error: error,
-          errorMessage: errorMessage,
-          handleSaveAdd: handleSaveAdd,
-          fillCities: fillCities,
-          airlines: airlines,
-          fillDestinations: fillDestinations,
-          origins: origins,
-          destinations: destinations,
-          setSelectedDestinationn: setSelectedDestinationn,
-          actualDate: actualDate,
-          updateArrivalMin: updateArrivalMin
-        })]
-      })]
-    })
-  });
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFlights);
-
-/***/ }),
-
-/***/ "./resources/js/components/ModalCrud.jsx":
-/*!***********************************************!*\
-  !*** ./resources/js/components/ModalCrud.jsx ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
-/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var _ComboBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComboBox */ "./resources/js/components/ComboBox.jsx");
-/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+  }; // const {selectedAirline, selectedDestination, selectedOrigin, showAdd, handleCloseAdd, 
+  //     error, errorMessage, handleSaveAdd, fillCities, airlines, 
+  //     fillDestinations, origins, destinations,
+  //     setSelectedDestinationn, actualDate, updateArrivalMin} = props;
 
 
-
-
-
-
-
-
-var ModalCrud = function ModalCrud(props) {
-  var selectedAirline = props.selectedAirline,
-      selectedDestination = props.selectedDestination,
-      selectedOrigin = props.selectedOrigin,
-      showAdd = props.showAdd,
-      handleCloseAdd = props.handleCloseAdd,
-      error = props.error,
-      errorMessage = props.errorMessage,
-      handleSaveAdd = props.handleSaveAdd,
-      fillCities = props.fillCities,
-      airlines = props.airlines,
-      fillDestinations = props.fillDestinations,
-      origins = props.origins,
-      destinations = props.destinations,
-      setSelectedDestinationn = props.setSelectedDestinationn,
-      actualDate = props.actualDate,
-      updateArrivalMin = props.updateArrivalMin;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
     show: showAdd,
     onHide: handleCloseAdd,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Header, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
       closeButton: true,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Title, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Title, {
         children: "Add a new flight"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Body, {
-      children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
+      children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"], {
         className: "mb-3 bg-red-500",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"].Header, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"].Header, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
             src: "holder.js/20x20?text=%20",
             className: "rounded me-2",
             alt: ""
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("strong", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
             className: "me-auto",
             children: "ERROR"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_4__["default"].Body, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"].Body, {
           children: errorMessage
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
         id: "add-form",
         onSubmit: handleSaveAdd,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "airline",
           selectedValue: selectedAirline,
           onChangeDo: fillCities,
           airlines: airlines
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "origin",
           selectedValue: selectedOrigin,
           onChangeDo: fillDestinations,
           cities: origins
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "destination",
           selectedValue: selectedDestination,
           onChangeDo: setSelectedDestinationn,
           cities: destinations
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "mt-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
             htmlFor: "departureCalendar",
             className: "mr-5",
             children: "Departure:"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
             type: "datetime-local",
             id: "departureCalendar",
             name: "departureCalendar",
             min: actualDate,
             onChange: updateArrivalMin
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "mt-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
             htmlFor: "arrivalCalendar",
             className: "mr-5",
             children: "Arrival:"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
             type: "datetime-local",
             id: "arrivalCalendar",
             name: "arrivalCalendar"
           })]
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_3__["default"].Footer, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Footer, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         variant: "btn btn-outline-secondary",
         onClick: handleCloseAdd,
         children: "Close"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         type: "submit",
         form: "add-form",
         variant: "btn btn-outline-primary",
