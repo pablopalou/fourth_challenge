@@ -53,3 +53,5 @@ Route::get('/getAirlines', [AirlineController::class, 'getAirlines']);
 
 Route::post('/flights', [FlightController::class, 'store']);
 
+Route::post('/updateFlight', [FlightController::class, 'update']);
+

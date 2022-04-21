@@ -6535,8 +6535,8 @@ var ComboBox = function ComboBox(_ref) {
       cities = _ref.cities,
       comboBoxName = _ref.comboBoxName,
       onChangeDo = _ref.onChangeDo;
-  console.log("Desde combobox: ");
-  console.log(selectedValue);
+  // console.log("Desde combobox: ");
+  // console.log(selectedValue);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
       htmlFor: name,
@@ -6674,14 +6674,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
-/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Toast */ "./node_modules/react-bootstrap/esm/Toast.js");
+/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
 /* harmony import */ var _ComboBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ComboBox */ "./resources/js/components/ComboBox.jsx");
-/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var _hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useGetAirlines */ "./resources/js/hooks/useGetAirlines.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useGetFlights */ "./resources/js/hooks/useGetFlights.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6713,11 +6714,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var ModalCrud = function ModalCrud(props) {
   var name = props.name,
       handleClose = props.handleClose,
       show = props.show,
       setFlights = props.setFlights,
+      flights = props.flights,
       selected = props.selected,
       selEditAirline = props.selEditAirline,
       selEditOrigin = props.selEditOrigin,
@@ -6772,35 +6775,85 @@ var ModalCrud = function ModalCrud(props) {
   var handleSaveAdd = function handleSaveAdd(event) {
     event.preventDefault();
     setError(false);
-    var flightInfo = {
-      airlineId: event.target[0].value,
-      originId: event.target[1].value,
-      destinationId: event.target[2].value,
-      takeOff: event.target[3].value,
-      landing: event.target[4].value
-    }; // console.log(flightInfo);
 
-    if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
-      axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
-        handleClose();
-        setFlights(function (prev) {
-          return [].concat(_toConsumableArray(prev), [response.data.flight]);
-        }); // vuelvo a setear las cosas a select.
+    if (name == "Add") {
+      var flightInfo = {
+        airlineId: event.target[0].value,
+        originId: event.target[1].value,
+        destinationId: event.target[2].value,
+        takeOff: event.target[3].value,
+        landing: event.target[4].value
+      };
+      console.log("entre a add");
 
-        setSelectedAirline(["SELECT"]);
-        setSelectedOrigin(["SELECT"]);
-        setSelectedDestination(["SELECT"]);
-        setOrigins(["SELECT"]);
-        setDestinations(["SELECT"]);
-      })["catch"](function (err) {
-        return console.warn(err);
-      });
-    } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
-      setError(true);
-      setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+      if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
+        axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
+          handleClose();
+          setFlights(function (prev) {
+            return [].concat(_toConsumableArray(prev), [response.data.flight]);
+          }); // vuelvo a setear las cosas a select.
+
+          setSelectedAirline(["SELECT"]);
+          setSelectedOrigin(["SELECT"]);
+          setSelectedDestination(["SELECT"]);
+          setOrigins(["SELECT"]);
+          setDestinations(["SELECT"]);
+        })["catch"](function (err) {
+          return console.warn(err);
+        });
+      } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
+        setError(true);
+        setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+      } else {
+        setError(true);
+        setErrorMessage("You must select a valid airline and also valid cities.");
+      }
     } else {
-      setError(true);
-      setErrorMessage("You must select a valid airline and also valid cities.");
+      console.log("entre a update");
+      var flightInfoUpdate = {
+        flightId: selected,
+        airlineId: event.target[0].value,
+        originId: event.target[1].value,
+        destinationId: event.target[2].value,
+        takeOff: event.target[3].value,
+        landing: event.target[4].value
+      };
+      console.log("Flight info update", flightInfoUpdate);
+
+      if (flightInfoUpdate.airlineId != "SELECT" && flightInfoUpdate.originId != "SELECT" && flightInfoUpdate.destinationId != "SELECT" && flightInfoUpdate.takeOff != '' && flightInfoUpdate.landing != '') {
+        axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/updateFlight", flightInfoUpdate).then(function (response) {
+          handleClose();
+          console.log("Response: ", response.data.flight); // hay que filtrar y cambiar el anterior digamos 
+
+          var flightsUpdated = _toConsumableArray(flights); // console.log(flights);
+
+
+          flightsUpdated = flightsUpdated.map(function (flight) {
+            if (flight.id == response.data.flight.id) {
+              return response.data.flight;
+            } else {
+              return flight;
+            }
+          }); // otra manera de hacer el map mas corta es:
+          // flightsUpdated.map( (flight) => flight.id == response.data.flight.id ? response.data.flight : flight);
+          // console.log(flightsUpdated);
+
+          setFlights(flightsUpdated);
+          setSelectedAirline(["SELECT"]);
+          setSelectedOrigin(["SELECT"]);
+          setSelectedDestination(["SELECT"]);
+          setOrigins(["SELECT"]);
+          setDestinations(["SELECT"]);
+        })["catch"](function (err) {
+          return console.warn(err);
+        });
+      } else if (flightInfoUpdate.takeOff == '' || flightInfoUpdate.takeOff == '' || flightInfoUpdate.takeOff == undefined || flightInfoUpdate.landing == undefined) {
+        setError(true);
+        setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+      } else {
+        setError(true);
+        setErrorMessage("You must select a valid airline and also valid cities.");
+      }
     }
   };
 
@@ -6860,87 +6913,87 @@ var ModalCrud = function ModalCrud(props) {
   }; // no se xq el titulo de: add a NEW flight no funciona
 
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
     show: true,
     onHide: handleClose,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__["default"].Header, {
       closeButton: true,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Title, {
-        children: [name, " a ", JSON.stringify(name) == "Add" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__["default"].Title, {
+        children: [name, " a ", JSON.stringify(name) == "Add" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
           children: "\"new\""
         }), " flight"]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
-      children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__["default"].Body, {
+      children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_7__["default"], {
         className: "mb-3 bg-red-500",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"].Header, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_7__["default"].Header, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
             src: "holder.js/20x20?text=%20",
             className: "rounded me-2",
             alt: ""
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("strong", {
             className: "me-auto",
             children: "ERROR"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"].Body, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_7__["default"].Body, {
           children: errorMessage
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
         id: "add-form",
         onSubmit: handleSaveAdd,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "airline",
           selectedValue: selectedAirline,
           onChangeDo: function onChangeDo(event) {
             return fillCities(event.target.value);
           },
           airlines: airlines
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "origin",
           selectedValue: selectedOrigin,
           onChangeDo: function onChangeDo(event) {
             return fillDestinations(event.target.value);
           },
           cities: origins
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "destination",
           selectedValue: selectedDestination,
           onChangeDo: function onChangeDo(event) {
             return setSelectedDestinationn(event.target.value);
           },
           cities: destinations
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "mt-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "departureCalendar",
             className: "mr-5",
             children: "Departure:"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "datetime-local",
             id: "departureCalendar",
             name: "departureCalendar",
             min: actualDate,
             onChange: updateArrivalMin
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "mt-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "arrivalCalendar",
             className: "mr-5",
             children: "Arrival:"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "datetime-local",
             id: "arrivalCalendar",
             name: "arrivalCalendar"
           })]
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Footer, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_6__["default"].Footer, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_8__["default"], {
         variant: "btn btn-outline-secondary",
         onClick: handleClose,
         children: "Close"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_8__["default"], {
         type: "submit",
         form: "add-form",
         variant: "btn btn-outline-primary",
@@ -6995,7 +7048,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Table = function Table(props) {
-  var setFlights = props.setFlights;
+  var flights = props.flights,
+      setFlights = props.setFlights;
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -7070,7 +7124,8 @@ var Table = function Table(props) {
       selected: selected,
       selEditAirline: selectedAirline,
       selEditOrigin: selectedOrigin,
-      selEditDestination: selectedDestination
+      selEditDestination: selectedDestination,
+      flights: flights
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
       show: showDelete,
       onHide: handleCloseDelete,
@@ -7281,10 +7336,10 @@ var useGetAirlines = function useGetAirlines(route) {
 
           case 2:
             response = _context.sent;
-            console.log(response.data['airlines']);
+            // console.log(response.data['airlines'])
             setAirlines(response.data['airlines']);
 
-          case 5:
+          case 4:
           case "end":
             return _context.stop();
         }

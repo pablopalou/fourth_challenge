@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import ModalCrud from './ModalCrud';
 
 const Table = (props) => {
-    const {setFlights} = props;
+    const {flights, setFlights} = props;
     const [showEdit, setShowEdit] = React.useState(false);
     const [showDelete, setShowDelete] = React.useState(false);
     const [selected, setSelected] = React.useState(0);
@@ -53,6 +53,7 @@ const Table = (props) => {
             selEditAirline = {selectedAirline}
             selEditOrigin = {selectedOrigin}
             selEditDestination = {selectedDestination}
+            flights = {flights}
         ></ModalCrud>}
         
         

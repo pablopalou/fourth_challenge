@@ -6,7 +6,7 @@ const useGetAirlines = (route) => {
 
 	useEffect(async () => {
 		const response = await axios(route);
-        console.log(response.data['airlines'])
+        // console.log(response.data['airlines'])
 		setAirlines(response.data['airlines']);
 	}, []);
 

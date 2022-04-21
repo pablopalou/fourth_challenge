@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $city = City::find(1);
         $a = Airline::find(1);
+        $a5 = Airline::find(5);
         $city2 = City::find(2);
         $city3 = City::find(3);
         $city4 = City::find(4);
@@ -57,6 +58,8 @@ class DatabaseSeeder extends Seeder
         $a->cities()->attach($city5);
         $a->cities()->attach($city16);
         $a->cities()->attach($city17);
+        $a5->cities()->attach($city16);
+        $a5->cities()->attach($city17);
         
     }
 }

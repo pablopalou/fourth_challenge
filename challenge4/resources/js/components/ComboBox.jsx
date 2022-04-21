@@ -8,8 +8,8 @@ import React from 'react';
 // }
 
 const ComboBox = ({name, selectedValue, airlines, cities, comboBoxName, onChangeDo}) => {
-    console.log("Desde combobox: ");
-    console.log(selectedValue);
+    // console.log("Desde combobox: ");
+    // console.log(selectedValue);
     return (
         <div>
             <label htmlFor={name} className="block text-sm font-medium text-gray-700">

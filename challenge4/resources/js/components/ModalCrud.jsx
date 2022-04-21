@@ -5,9 +5,10 @@ import ComboBox from "./ComboBox";
 import Button from "react-bootstrap/Button";
 import useGetAirlines from '../hooks/useGetAirlines';
 import axios from 'axios';
+import useGetFlights from '../hooks/useGetFlights';
 
 const ModalCrud = (props) => {
-    const {name, handleClose, show, setFlights, selected, selEditAirline, selEditOrigin, selEditDestination} = props;
+    const {name, handleClose, show, setFlights, flights, selected, selEditAirline, selEditOrigin, selEditDestination} = props;
     console.log(JSON.stringify(name));
     
     const route = "http://127.0.0.1:8000/getAirlines"
@@ -25,8 +26,6 @@ const ModalCrud = (props) => {
 
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
-    
-
 
     let actualDate = new Date().toJSON().slice(0,19);
     // // console.log(actualDate);
@@ -34,34 +33,83 @@ const ModalCrud = (props) => {
     const handleSaveAdd = (event) => {
         event.preventDefault();
         setError(false);
-        const flightInfo = {
-            airlineId : event.target[0].value,
-            originId : event.target[1].value,
-            destinationId : event.target[2].value,
-            takeOff: event.target[3].value,
-            landing: event.target[4].value 
-        };
-        // console.log(flightInfo);
-        if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '' ){
-            axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
-            .then(response => {
-                handleClose();
-                setFlights(prev => [...prev, response.data.flight]);
-                // vuelvo a setear las cosas a select.
-                setSelectedAirline(["SELECT"]);
-                setSelectedOrigin(["SELECT"]);
-                setSelectedDestination(["SELECT"]);
-                setOrigins(["SELECT"]);
-                setDestinations(["SELECT"]);
 
-            })
-            .catch(err => console.warn(err));
-        } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
-            setError(true);
-            setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+        if (name == "Add"){
+            const flightInfo = {
+                airlineId : event.target[0].value,
+                originId : event.target[1].value,
+                destinationId : event.target[2].value,
+                takeOff: event.target[3].value,
+                landing: event.target[4].value 
+            };
+            console.log("entre a add");
+            if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '' ){
+                axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
+                .then(response => {
+                    handleClose();
+                    setFlights(prev => [...prev, response.data.flight]);
+                    // vuelvo a setear las cosas a select.
+                    setSelectedAirline(["SELECT"]);
+                    setSelectedOrigin(["SELECT"]);
+                    setSelectedDestination(["SELECT"]);
+                    setOrigins(["SELECT"]);
+                    setDestinations(["SELECT"]);
+    
+                })
+                .catch(err => console.warn(err));
+            } else if (flightInfo.takeOff == '' || flightInfo.takeOff == '' || flightInfo.takeOff == undefined || flightInfo.landing == undefined) {
+                setError(true);
+                setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+            } else {
+                setError(true);
+                setErrorMessage("You must select a valid airline and also valid cities.");
+            }
         } else {
-            setError(true);
-            setErrorMessage("You must select a valid airline and also valid cities.");
+            console.log("entre a update");
+            const flightInfoUpdate = {
+                flightId: selected,
+                airlineId : event.target[0].value,
+                originId : event.target[1].value,
+                destinationId : event.target[2].value,
+                takeOff: event.target[3].value,
+                landing: event.target[4].value 
+            };
+            console.log("Flight info update", flightInfoUpdate);
+            if (flightInfoUpdate.airlineId != "SELECT" && flightInfoUpdate.originId != "SELECT" && flightInfoUpdate.destinationId != "SELECT" && flightInfoUpdate.takeOff != '' && flightInfoUpdate.landing != '' ){
+                axios.post(`http://127.0.0.1:8000/updateFlight`, flightInfoUpdate)
+                .then(response => {
+                    handleClose();
+                    console.log("Response: ", response.data.flight);
+                    // hay que filtrar y cambiar el anterior digamos 
+                    let flightsUpdated = [...flights];
+                    // console.log(flights);
+                    flightsUpdated = flightsUpdated.map( (flight) => {
+                        if (flight.id == response.data.flight.id){
+                            return response.data.flight;
+                        } else {
+                            return flight;
+                        }
+                    });
+                    // otra manera de hacer el map mas corta es:
+                    // flightsUpdated.map( (flight) => flight.id == response.data.flight.id ? response.data.flight : flight);
+
+                    // console.log(flightsUpdated);
+                    setFlights(flightsUpdated);
+                    setSelectedAirline(["SELECT"]);
+                    setSelectedOrigin(["SELECT"]);
+                    setSelectedDestination(["SELECT"]);
+                    setOrigins(["SELECT"]);
+                    setDestinations(["SELECT"]);
+    
+                })
+                .catch(err => console.warn(err));
+            } else if (flightInfoUpdate.takeOff == '' || flightInfoUpdate.takeOff == '' || flightInfoUpdate.takeOff == undefined || flightInfoUpdate.landing == undefined) {
+                setError(true);
+                setErrorMessage("You must fill the form with valid takeOff and landing dates.");
+            } else {
+                setError(true);
+                setErrorMessage("You must select a valid airline and also valid cities.");
+            }
         }
 
     }
@@ -130,6 +178,7 @@ const ModalCrud = (props) => {
                         </Toast.Header>
                         <Toast.Body>{errorMessage}</Toast.Body>
                         </Toast>}
+                        
                 <form id="add-form" onSubmit={handleSaveAdd}>
                     <ComboBox name="airline"
                         selectedValue={selectedAirline}
