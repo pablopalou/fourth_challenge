@@ -14,7 +14,7 @@ const TableRow = (props) => {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{flight.takeOff }</td>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{flight.landing}</td>
             <td>
-                <Button variant="primary" value={flight.id} onClick={handleShowEdit} className="btn btn-outline-primary btn-sm edit_flight" >
+                <Button variant="primary" value={flight.id} onClick={() => handleShowEdit(flight)} className="btn btn-outline-primary btn-sm edit_flight" >
                     Edit
                 </Button>
             </td>

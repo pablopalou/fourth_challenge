@@ -28,8 +28,9 @@ const HeaderFlights = (props) => {
                         Add flight
                     </Button>
                     <ModalCrud
-                        showAdd={showAdd}
-                        handleCloseAdd={handleCloseAdd}
+                        name="Add"
+                        show={showAdd}
+                        handleClose={handleCloseAdd}
                         setFlights = {setFlights}
                     >
 

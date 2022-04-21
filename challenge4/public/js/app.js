@@ -6519,7 +6519,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
  // ERROR: Interface declarations solo sirven en un archivo de Typescript
-// interface ComboBoxProps {
+// interface ComboBox{
 //     airlines? ;
 //     comboBoxName: String;
 //     cities? ;
@@ -6528,22 +6528,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var ComboBox = function ComboBox(props) {
-  var airlines = props.airlines;
-  var cities = props.cities;
-  var comboBoxName = props.name; // console.log(comboBoxName);
-
+var ComboBox = function ComboBox(_ref) {
+  var name = _ref.name,
+      selectedValue = _ref.selectedValue,
+      airlines = _ref.airlines,
+      cities = _ref.cities,
+      comboBoxName = _ref.comboBoxName,
+      onChangeDo = _ref.onChangeDo;
+  console.log("dsadsadssdd");
+  console.log(selectedValue);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
-      htmlFor: props.name,
+      htmlFor: name,
       className: "block text-sm font-medium text-gray-700",
-      children: props.name
+      children: name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("select", {
-      id: props.name,
-      name: props.name,
-      value: props.selectedValue,
+      id: name,
+      name: name,
+      value: selectedValue,
       onChange: function onChange(event) {
-        return props.onChangeDo(event);
+        return onChangeDo(event);
       },
       className: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
@@ -6554,7 +6558,7 @@ var ComboBox = function ComboBox(props) {
           value: airline.id,
           children: airline.name
         }, airline.id);
-      }), cities !== undefined && props.cities.map(function (city) {
+      }), cities !== undefined && cities.map(function (city) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
           value: city.id,
           children: city.name
@@ -6644,8 +6648,9 @@ var HeaderFlights = function HeaderFlights(props) {
           className: "btn btn-outline-primary btn-sm add_flight",
           children: "Add flight"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          showAdd: showAdd,
-          handleCloseAdd: handleCloseAdd,
+          name: "Add",
+          show: showAdd,
+          handleClose: handleCloseAdd,
           setFlights: setFlights
         })]
       })]
@@ -6707,25 +6712,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var ModalCrud = function ModalCrud(props) {
-  var handleCloseAdd = props.handleCloseAdd,
-      showAdd = props.showAdd,
-      setFlights = props.setFlights;
+  var name = props.name,
+      handleClose = props.handleClose,
+      show = props.show,
+      setFlights = props.setFlights,
+      selected = props.selected,
+      selEditAirline = props.selEditAirline,
+      selEditOrigin = props.selEditOrigin,
+      selEditDestination = props.selEditDestination;
+  console.log(JSON.stringify(name));
   var route = "http://127.0.0.1:8000/getAirlines"; // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
+  // console.log("SELEDITAIRLINE ES: ");
+  // console.log(selEditAirline);
 
-  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__["default"])(route);
+  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__["default"])(route); // const [selectedAirline, setSelectedAirline] = React.useState(selEditAirline == undefined || selEditAirline == {} ? "SELECT" : selEditAirline.name);
 
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       selectedAirline = _React$useState2[0],
       setSelectedAirline = _React$useState2[1];
 
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       selectedOrigin = _React$useState4[0],
       setSelectedOrigin = _React$useState4[1];
 
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState("SELECT"),
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
       selectedDestination = _React$useState6[0],
       setSelectedDestination = _React$useState6[1];
@@ -6750,7 +6764,7 @@ var ModalCrud = function ModalCrud(props) {
       errorMessage = _React$useState14[0],
       setErrorMessage = _React$useState14[1];
 
-  var actualDate = new Date().toJSON().slice(0, 19);
+  var actualDate = new Date().toJSON().slice(0, 19); // // console.log(actualDate);
 
   var handleSaveAdd = function handleSaveAdd(event) {
     event.preventDefault();
@@ -6761,12 +6775,11 @@ var ModalCrud = function ModalCrud(props) {
       destinationId: event.target[2].value,
       takeOff: event.target[3].value,
       landing: event.target[4].value
-    };
-    console.log(flightInfo);
+    }; // console.log(flightInfo);
 
     if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
       var response = axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
-        handleCloseAdd();
+        handleClose();
         setFlights(function (prev) {
           return [].concat(_toConsumableArray(prev), [response.data.flight]);
         }); // vuelvo a setear las cosas a select.
@@ -6785,85 +6798,48 @@ var ModalCrud = function ModalCrud(props) {
     } else {
       setError(true);
       setErrorMessage("You must select a valid airline and also valid cities.");
-    } // hacer algo con el mensaje
-
-  }; // const cleanOriginCombobox = () => {
-  //     setOrigins([]);
-  //     // funciona pero queda feo
-  //     // $('#origin')
-  //     //     .empty()
-  //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
-  // }
-  // const cleanDestinationCombobox = () => {
-  //     setDestinations([]);
-  //     // $('#destination')
-  //     //     .empty()
-  //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
-  // }
-
-
-  var fillCities = function fillCities(event) {
-    setSelectedAirline(event.target.value); // React.useEffect(() => {}, [selectedAirline]);
-    // al asignar directo todo el array de vuelta, no es necesario limpiar
-    // cleanOriginCombobox();
-    // cleanDestinationCombobox();
-
-    fillSecondAndThird(event);
+    }
   };
 
-  var fillSecondAndThird = function fillSecondAndThird(event) {
-    if (event.target.value !== "SELECT") {
-      // dada la aerolinea, llenar el origen y el destino.
+  var fillSecondAndThird = function fillSecondAndThird(value) {
+    if (value !== "SELECT") {
       {
         airlines.map(function (airline) {
-          if (airline.id == event.target.value) {
-            // console.log(airline);
+          if (airline.id == value) {
             setOrigins(airline.cities);
-            setDestinations(airline.cities); // No hay que agregar una por una... mas facil poner el array de una
-            // {airline['cities'].map( city => {
-            //         // las podria guardar todas en un array asi despues las asigno todas juntas si es posible
-            //         setOrigins(prev => [...prev, city]);
-            //         setDestinations(prev => [...prev, city]);
-            //     }
-            // )};
+            setDestinations(airline.cities);
           }
         });
       }
     }
-  }; // funciona pero queda feo
-  // {airlines.map(airline => {
-  //     // con === no funciona
-  //     if (airline.id == event.target.value ){ //aca antes comparaba con selectedAirline pero no se actualizaba
-  //         // tengo que cargar las ciudades
-  //         // console.log(airline);
-  //         {airline['cities'].map(city => {
-  //             $('#origin').append(`<option key="${city.id}" value="${city.id}">
-  //                                     ${city.name}
-  //                                 </option>`);
-  //             $('#destination').append(`<option class="cl" key="${city.id}" value="${city.id}">
-  //                                 ${city.name}
-  //                             </option>`);
-  //             }
-  //         )}
-  //     } 
-  //     }
-  // )}
+  };
 
+  var fillCities = function fillCities(value) {
+    console.log(value); // console.log("entre al fill");
 
-  var fillDestinations = function fillDestinations(event) {
-    setSelectedOrigin(event.target.value); // deberia agarrar la aerolinea seleccionada y cargar todo de vuelta y despues si filtrar
+    setSelectedAirline(value); // console.log("-------");
+    // console.log(selectedAirline);
+
+    fillSecondAndThird(value);
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (selEditAirline != undefined && selEditAirline != {}) {
+      // console.log("FIJARSE ACA:")
+      // console.log(selEditAirline);
+      fillCities(selEditAirline.id);
+    }
+  }, [selEditAirline]);
+
+  var fillDestinations = function fillDestinations(value) {
+    setSelectedOrigin(value); // deberia agarrar la aerolinea seleccionada y cargar todo de vuelta y despues si filtrar
     // delete from the destination state the event if it is not SELECT
 
-    if (event.target.value !== 'SELECT') {
+    if (value !== 'SELECT') {
       setDestinations(destinations.filter(function (destination) {
-        return destination.id != event.target.value;
+        return destination.id != value;
       }));
-    } // funciona pero queda feo
-    // delete the destination that is the same as origin (if not SELECT)
-    // if (event.target.value !== 'SELECT'){
-    //     $('#destination > option').filter((o) => (o == event.target.value)).remove();
-    // }
-
+    }
   };
 
   var updateArrivalMin = function updateArrivalMin() {
@@ -6872,21 +6848,19 @@ var ModalCrud = function ModalCrud(props) {
     document.getElementById("arrivalCalendar").setAttribute("min", departureDate);
   };
 
-  var setSelectedDestinationn = function setSelectedDestinationn(event) {
-    setSelectedDestination(event.target.value);
-  }; // const {selectedAirline, selectedDestination, selectedOrigin, showAdd, handleCloseAdd, 
-  //     error, errorMessage, handleSaveAdd, fillCities, airlines, 
-  //     fillDestinations, origins, destinations,
-  //     setSelectedDestinationn, actualDate, updateArrivalMin} = props;
+  var setSelectedDestinationn = function setSelectedDestinationn(value) {
+    setSelectedDestination(value);
+  }; // no se xq el titulo de: add a NEW flight no funciona
 
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    show: showAdd,
-    onHide: handleCloseAdd,
+    onHide: handleClose,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
       closeButton: true,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Title, {
-        children: "Add a new flight"
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Title, {
+        children: [name, " a ", JSON.stringify(name) == "Add" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+          children: "\"new\""
+        }), " flight"]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
       children: [error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Toast__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -6909,17 +6883,23 @@ var ModalCrud = function ModalCrud(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "airline",
           selectedValue: selectedAirline,
-          onChangeDo: fillCities,
+          onChangeDo: function onChangeDo(event) {
+            return fillCities(event.target.value);
+          },
           airlines: airlines
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "origin",
           selectedValue: selectedOrigin,
-          onChangeDo: fillDestinations,
+          onChangeDo: function onChangeDo(event) {
+            return fillDestinations(event.target.value);
+          },
           cities: origins
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ComboBox__WEBPACK_IMPORTED_MODULE_1__["default"], {
           name: "destination",
           selectedValue: selectedDestination,
-          onChangeDo: setSelectedDestinationn,
+          onChangeDo: function onChangeDo(event) {
+            return setSelectedDestinationn(event.target.value);
+          },
           cities: destinations
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "mt-3",
@@ -6950,7 +6930,7 @@ var ModalCrud = function ModalCrud(props) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Footer, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         variant: "btn btn-outline-secondary",
-        onClick: handleCloseAdd,
+        onClick: handleClose,
         children: "Close"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         type: "submit",
@@ -6980,9 +6960,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _components_TableHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/TableHeader */ "./resources/js/components/TableHeader.jsx");
 /* harmony import */ var _components_TableRow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TableRow */ "./resources/js/components/TableRow.jsx");
-/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Modal */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var _ModalCrud__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ModalCrud */ "./resources/js/components/ModalCrud.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7004,7 +6985,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Table = function Table(props) {
+  var setFlights = props.setFlights;
+
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       showEdit = _React$useState2[0],
@@ -7014,6 +6998,26 @@ var Table = function Table(props) {
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       showDelete = _React$useState4[0],
       setShowDelete = _React$useState4[1];
+
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(0),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      selected = _React$useState6[0],
+      setSelected = _React$useState6[1];
+
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState({}),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      selectedAirline = _React$useState8[0],
+      setSelectedAirline = _React$useState8[1];
+
+  var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_0__.useState({}),
+      _React$useState10 = _slicedToArray(_React$useState9, 2),
+      selectedOrigin = _React$useState10[0],
+      setSelectedOrigin = _React$useState10[1];
+
+  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0__.useState({}),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      selectedDestination = _React$useState12[0],
+      setSelectedDestination = _React$useState12[1];
 
   var handleCloseDelete = function handleCloseDelete() {
     return setShowDelete(false);
@@ -7027,60 +7031,54 @@ var Table = function Table(props) {
     return setShowEdit(false);
   };
 
-  var handleShowEdit = function handleShowEdit() {
-    return setShowEdit(true);
+  var handleShowEdit = function handleShowEdit(flight) {
+    // console.log("VUELOOO");
+    // console.log(flight);
+    setSelected(flight.id);
+    setSelectedAirline(flight.airline);
+    setSelectedOrigin(flight.origin);
+    setSelectedDestination(flight.destination);
+    setShowEdit(true);
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("table", {
       className: "min-w-full divide-y divide-gray-300",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_components_TableHeader__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_TableHeader__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("tbody", {
         className: "divide-y divide-gray-200 bg-white",
         children: props.flights.map(function (flight) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_components_TableRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_TableRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
             handleShowDelete: handleShowDelete,
             handleShowEdit: handleShowEdit,
             flight: flight
           }, flight.id);
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), showEdit == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      name: "Edit",
       show: showEdit,
-      onHide: handleCloseEdit,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Header, {
-        closeButton: true,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Title, {
-          children: "Modal heading"
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Body, {
-        children: "Woohoo, you're reading this text in a modal!"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Footer, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          variant: "secondary",
-          onClick: handleCloseEdit,
-          children: "Close"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          variant: "primary",
-          onClick: handleCloseEdit,
-          children: "Save Changes"
-        })]
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      handleClose: handleCloseEdit,
+      setFlights: setFlights,
+      selected: selected,
+      selEditAirline: selectedAirline,
+      selEditOrigin: selectedOrigin,
+      selEditDestination: selectedDestination
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
       show: showDelete,
       onHide: handleCloseDelete,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Header, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
         closeButton: true,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Title, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Title, {
           children: "Modal heading"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Body, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Body, {
         children: "Woohoo, you're reading this text in a modal!"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_4__["default"].Footer, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Footer, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
           variant: "secondary",
           onClick: handleCloseDelete,
           children: "Close"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
           variant: "primary",
           onClick: handleCloseDelete,
           children: "Save Changes"
@@ -7199,7 +7197,9 @@ var TableRow = function TableRow(props) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
         variant: "primary",
         value: flight.id,
-        onClick: handleShowEdit,
+        onClick: function onClick() {
+          return handleShowEdit(flight);
+        },
         className: "btn btn-outline-primary btn-sm edit_flight",
         children: "Edit"
       })

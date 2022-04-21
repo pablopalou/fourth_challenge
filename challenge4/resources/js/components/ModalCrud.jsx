@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import Modal from "react-bootstrap/Modal";
 import ComboBox from "./ComboBox";
@@ -7,22 +7,29 @@ import useGetAirlines from '../hooks/useGetAirlines';
 import axios from 'axios';
 
 const ModalCrud = (props) => {
-    const {handleCloseAdd, showAdd, setFlights} = props;
+    const {name, handleClose, show, setFlights, selected, selEditAirline, selEditOrigin, selEditDestination} = props;
+    console.log(JSON.stringify(name));
+    
     const route = "http://127.0.0.1:8000/getAirlines"
     // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
-    
+    // console.log("SELEDITAIRLINE ES: ");
+    // console.log(selEditAirline);
     const airlines = useGetAirlines(route);
-    const [selectedAirline, setSelectedAirline] = React.useState("SELECT");
-    const [selectedOrigin, setSelectedOrigin] = React.useState("SELECT");
-    const [selectedDestination, setSelectedDestination] = React.useState("SELECT");
+    // const [selectedAirline, setSelectedAirline] = React.useState(selEditAirline == undefined || selEditAirline == {} ? "SELECT" : selEditAirline.name);
+    const [selectedAirline, setSelectedAirline] = React.useState(["SELECT"]);
+    const [selectedOrigin, setSelectedOrigin] = React.useState(["SELECT"] );
+    const [selectedDestination, setSelectedDestination] = React.useState(["SELECT"]);
 
     const [origins, setOrigins] = React.useState(["SELECT"]);
     const [destinations, setDestinations] = React.useState(["SELECT"]);
 
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
+    
+
 
     let actualDate = new Date().toJSON().slice(0,19);
+    // // console.log(actualDate);
 
     const handleSaveAdd = (event) => {
         event.preventDefault();
@@ -34,11 +41,11 @@ const ModalCrud = (props) => {
             takeOff: event.target[3].value,
             landing: event.target[4].value 
         };
-        console.log(flightInfo);
+        // console.log(flightInfo);
         if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '' ){
             const response = axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
             .then(response => {
-                handleCloseAdd();
+                handleClose();
                 setFlights(prev => [...prev, response.data.flight]);
                 // vuelvo a setear las cosas a select.
                 setSelectedAirline(["SELECT"]);
@@ -56,90 +63,49 @@ const ModalCrud = (props) => {
             setError(true);
             setErrorMessage("You must select a valid airline and also valid cities.");
         }
-        
-        
-        // hacer algo con el mensaje
+
     }
 
-    // const cleanOriginCombobox = () => {
-    //     setOrigins([]);
-    //     // funciona pero queda feo
-    //     // $('#origin')
-    //     //     .empty()
-    //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
-    // }
-
-    // const cleanDestinationCombobox = () => {
-    //     setDestinations([]);
-    //     // $('#destination')
-    //     //     .empty()
-    //     //     .append('<option key="SELECT" selected="SELECT" value="SELECT">SELECT</option>');
-    // }
-
-    const fillCities = (event) => {
-        setSelectedAirline(event.target.value);
-        // React.useEffect(() => {}, [selectedAirline]);
-        // al asignar directo todo el array de vuelta, no es necesario limpiar
-        // cleanOriginCombobox();
-        // cleanDestinationCombobox();
-        fillSecondAndThird(event);
-    };
-
-    const fillSecondAndThird = (event) => {
-        if (event.target.value !== "SELECT"){
-            // dada la aerolinea, llenar el origen y el destino.
+    const fillSecondAndThird = (value) => {
+        if (value !== "SELECT"){
             {airlines.map(airline => {
-                if (airline.id == event.target.value ){ 
-                    // console.log(airline);
+                if (airline.id == value ){ 
                     setOrigins(airline.cities);
                     setDestinations(airline.cities);
-
-                    // No hay que agregar una por una... mas facil poner el array de una
-                    // {airline['cities'].map( city => {
-                    //         // las podria guardar todas en un array asi despues las asigno todas juntas si es posible
-                    //         setOrigins(prev => [...prev, city]);
-                    //         setDestinations(prev => [...prev, city]);
-                    //     }
-                    // )};
                 }
             })}
         }
     }
 
-            // funciona pero queda feo
-            // {airlines.map(airline => {
-            //     // con === no funciona
-            //     if (airline.id == event.target.value ){ //aca antes comparaba con selectedAirline pero no se actualizaba
-            //         // tengo que cargar las ciudades
-            //         // console.log(airline);
-            //         {airline['cities'].map(city => {
-            //             $('#origin').append(`<option key="${city.id}" value="${city.id}">
-            //                                     ${city.name}
-            //                                 </option>`);
-            //             $('#destination').append(`<option class="cl" key="${city.id}" value="${city.id}">
-            //                                 ${city.name}
-            //                             </option>`);
-            //             }
-            //         )}
-                    
-            //     } 
-            //     }
-            // )}
+    const fillCities = (value) => {
+        console.log(value);
+        // console.log("entre al fill");
+        setSelectedAirline(value);
+        // console.log("-------");
+        // console.log(selectedAirline);
+
+        fillSecondAndThird(value);
+    };
+
+    useEffect(() => {
+        if (selEditAirline != undefined && selEditAirline != {}){
+            // console.log("FIJARSE ACA:")
+            // console.log(selEditAirline);
+            fillCities(selEditAirline.id);
+        }
+    }, [selEditAirline]);
+
+    
+
         
 
-    const fillDestinations = (event) => {
-        setSelectedOrigin(event.target.value);
+    const fillDestinations = (value) => {
+        setSelectedOrigin(value);
         // deberia agarrar la aerolinea seleccionada y cargar todo de vuelta y despues si filtrar
         // delete from the destination state the event if it is not SELECT
-        if (event.target.value !== 'SELECT'){
-            setDestinations(destinations.filter(destination => destination.id != event.target.value))
+        if (value !== 'SELECT'){
+            setDestinations(destinations.filter(destination => destination.id != value))
         }
-
-        // funciona pero queda feo
-        // delete the destination that is the same as origin (if not SELECT)
-        // if (event.target.value !== 'SELECT'){
-        //     $('#destination > option').filter((o) => (o == event.target.value)).remove();
-        // }
     };
 
     const updateArrivalMin = () => {
@@ -148,20 +114,14 @@ const ModalCrud = (props) => {
         document.getElementById("arrivalCalendar").setAttribute("min",departureDate);
     }
 
-    const setSelectedDestinationn = (event) => {
-        setSelectedDestination(event.target.value);
+    const setSelectedDestinationn = (value) => {
+        setSelectedDestination(value);
     }
-
-    
-
-    // const {selectedAirline, selectedDestination, selectedOrigin, showAdd, handleCloseAdd, 
-    //     error, errorMessage, handleSaveAdd, fillCities, airlines, 
-    //     fillDestinations, origins, destinations,
-    //     setSelectedDestinationn, actualDate, updateArrivalMin} = props;
+    // no se xq el titulo de: add a NEW flight no funciona
     return (
-        <Modal show={showAdd} onHide={handleCloseAdd}>
+        <Modal onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>Add a new flight</Modal.Title>
+            <Modal.Title>{name} a {JSON.stringify(name) == "Add" && <>"new"</> } flight</Modal.Title>
             </Modal.Header>
             
             <Modal.Body>
@@ -175,19 +135,19 @@ const ModalCrud = (props) => {
                 <form id="add-form" onSubmit={handleSaveAdd}>
                     <ComboBox name="airline"
                         selectedValue={selectedAirline}
-                        onChangeDo={fillCities}
+                        onChangeDo={(event) => fillCities(event.target.value)}
                         airlines={airlines}
                     ></ComboBox>
 
                     <ComboBox name="origin"
                         selectedValue={selectedOrigin}
-                        onChangeDo={fillDestinations}
+                        onChangeDo={(event) => fillDestinations(event.target.value)}
                         cities={origins}
                     ></ComboBox>
                     
                     <ComboBox name="destination"
                         selectedValue={selectedDestination}
-                        onChangeDo={setSelectedDestinationn}
+                        onChangeDo={(event) => setSelectedDestinationn(event.target.value)}
                         cities={destinations}
                     ></ComboBox>
 
@@ -216,7 +176,7 @@ const ModalCrud = (props) => {
             </Modal.Body>
             
             <Modal.Footer>
-            <Button variant="btn btn-outline-secondary" onClick={handleCloseAdd}>
+            <Button variant="btn btn-outline-secondary" onClick={handleClose}>
                 Close
             </Button>
             <Button type="submit" form='add-form' variant="btn btn-outline-primary">
