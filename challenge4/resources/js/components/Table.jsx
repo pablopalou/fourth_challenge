@@ -44,7 +44,7 @@ const Table = (props) => {
         </table>
         
         {/* pongo el showEdit aca para que no se renderice el modal crud al pedo */}
-        {showEdit==true && <ModalCrud
+        {showEdit && <ModalCrud
             name="Edit"
             show={showEdit}
             handleClose={handleCloseEdit}

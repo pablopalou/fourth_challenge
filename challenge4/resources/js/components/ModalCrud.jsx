@@ -14,7 +14,7 @@ const ModalCrud = (props) => {
     // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";
     // console.log("SELEDITAIRLINE ES: ");
     // console.log(selEditAirline);
-    const airlines = useGetAirlines(route);
+    const {airlines, setAirlines} = useGetAirlines(route);
     // const [selectedAirline, setSelectedAirline] = React.useState(selEditAirline == undefined || selEditAirline == {} ? "SELECT" : selEditAirline.name);
     const [selectedAirline, setSelectedAirline] = React.useState(["SELECT"]);
     const [selectedOrigin, setSelectedOrigin] = React.useState(["SELECT"] );
@@ -43,7 +43,7 @@ const ModalCrud = (props) => {
         };
         // console.log(flightInfo);
         if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '' ){
-            const response = axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
+            axios.post(`http://127.0.0.1:8000/flights`, flightInfo)
             .then(response => {
                 handleClose();
                 setFlights(prev => [...prev, response.data.flight]);
@@ -67,10 +67,14 @@ const ModalCrud = (props) => {
     }
 
     const fillSecondAndThird = (value) => {
+        console.log("fillSecondAndThird");
+        console.log("Airlines: ", airlines);
         if (value !== "SELECT"){
             {airlines.map(airline => {
                 if (airline.id == value ){ 
                     setOrigins(airline.cities);
+                    console.log("ORIGINS:");
+                    console.log(origins);
                     setDestinations(airline.cities);
                 }
             })}
@@ -79,25 +83,19 @@ const ModalCrud = (props) => {
 
     const fillCities = (value) => {
         console.log(value);
-        // console.log("entre al fill");
         setSelectedAirline(value);
-        // console.log("-------");
-        // console.log(selectedAirline);
-
         fillSecondAndThird(value);
     };
 
     useEffect(() => {
         if (selEditAirline != undefined && selEditAirline != {}){
             // console.log("FIJARSE ACA:")
-            // console.log(selEditAirline);
+            console.log(selEditAirline);
             fillCities(selEditAirline.id);
+            setSelectedOrigin(selEditOrigin.id);
+            setSelectedDestination(selEditDestination.id);
         }
-    }, [selEditAirline]);
-
-    
-
-        
+    }, [selEditAirline, airlines]); 
 
     const fillDestinations = (value) => {
         setSelectedOrigin(value);
@@ -119,7 +117,7 @@ const ModalCrud = (props) => {
     }
     // no se xq el titulo de: add a NEW flight no funciona
     return (
-        <Modal onHide={handleClose}>
+        <Modal show={true} onHide={handleClose}>
             <Modal.Header closeButton>
             <Modal.Title>{name} a {JSON.stringify(name) == "Add" && <>"new"</> } flight</Modal.Title>
             </Modal.Header>

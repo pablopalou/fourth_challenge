@@ -10,7 +10,7 @@ const useGetAirlines = (route) => {
 		setAirlines(response.data['airlines']);
 	}, []);
 
-	return airlines;
+	return {airlines, setAirlines};
 };
 
 export default useGetAirlines;

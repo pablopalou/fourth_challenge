@@ -6535,7 +6535,7 @@ var ComboBox = function ComboBox(_ref) {
       cities = _ref.cities,
       comboBoxName = _ref.comboBoxName,
       onChangeDo = _ref.onChangeDo;
-  console.log("dsadsadssdd");
+  console.log("Desde combobox: ");
   console.log(selectedValue);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
@@ -6647,7 +6647,7 @@ var HeaderFlights = function HeaderFlights(props) {
           onClick: handleShowAdd,
           className: "btn btn-outline-primary btn-sm add_flight",
           children: "Add flight"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }), showAdd && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
           name: "Add",
           show: showAdd,
           handleClose: handleCloseAdd,
@@ -6727,7 +6727,10 @@ var ModalCrud = function ModalCrud(props) {
   // console.log("SELEDITAIRLINE ES: ");
   // console.log(selEditAirline);
 
-  var airlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__["default"])(route); // const [selectedAirline, setSelectedAirline] = React.useState(selEditAirline == undefined || selEditAirline == {} ? "SELECT" : selEditAirline.name);
+  var _useGetAirlines = (0,_hooks_useGetAirlines__WEBPACK_IMPORTED_MODULE_2__["default"])(route),
+      airlines = _useGetAirlines.airlines,
+      setAirlines = _useGetAirlines.setAirlines; // const [selectedAirline, setSelectedAirline] = React.useState(selEditAirline == undefined || selEditAirline == {} ? "SELECT" : selEditAirline.name);
+
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(["SELECT"]),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -6778,7 +6781,7 @@ var ModalCrud = function ModalCrud(props) {
     }; // console.log(flightInfo);
 
     if (flightInfo.airlineId != "SELECT" && flightInfo.originId != "SELECT" && flightInfo.destinationId != "SELECT" && flightInfo.takeOff != '' && flightInfo.landing != '') {
-      var response = axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://127.0.0.1:8000/flights", flightInfo).then(function (response) {
         handleClose();
         setFlights(function (prev) {
           return [].concat(_toConsumableArray(prev), [response.data.flight]);
@@ -6802,11 +6805,16 @@ var ModalCrud = function ModalCrud(props) {
   };
 
   var fillSecondAndThird = function fillSecondAndThird(value) {
+    console.log("fillSecondAndThird");
+    console.log("Airlines: ", airlines);
+
     if (value !== "SELECT") {
       {
         airlines.map(function (airline) {
           if (airline.id == value) {
             setOrigins(airline.cities);
+            console.log("ORIGINS:");
+            console.log(origins);
             setDestinations(airline.cities);
           }
         });
@@ -6815,21 +6823,20 @@ var ModalCrud = function ModalCrud(props) {
   };
 
   var fillCities = function fillCities(value) {
-    console.log(value); // console.log("entre al fill");
-
-    setSelectedAirline(value); // console.log("-------");
-    // console.log(selectedAirline);
-
+    console.log(value);
+    setSelectedAirline(value);
     fillSecondAndThird(value);
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (selEditAirline != undefined && selEditAirline != {}) {
       // console.log("FIJARSE ACA:")
-      // console.log(selEditAirline);
+      console.log(selEditAirline);
       fillCities(selEditAirline.id);
+      setSelectedOrigin(selEditOrigin.id);
+      setSelectedDestination(selEditDestination.id);
     }
-  }, [selEditAirline]);
+  }, [selEditAirline, airlines]);
 
   var fillDestinations = function fillDestinations(value) {
     setSelectedOrigin(value); // deberia agarrar la aerolinea seleccionada y cargar todo de vuelta y despues si filtrar
@@ -6854,6 +6861,7 @@ var ModalCrud = function ModalCrud(props) {
 
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    show: true,
     onHide: handleClose,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Modal__WEBPACK_IMPORTED_MODULE_5__["default"].Header, {
       closeButton: true,
@@ -7054,7 +7062,7 @@ var Table = function Table(props) {
           }, flight.id);
         })
       })]
-    }), showEdit == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), showEdit && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalCrud__WEBPACK_IMPORTED_MODULE_3__["default"], {
       name: "Edit",
       show: showEdit,
       handleClose: handleCloseEdit,
@@ -7283,7 +7291,10 @@ var useGetAirlines = function useGetAirlines(route) {
       }
     }, _callee);
   })), []);
-  return airlines;
+  return {
+    airlines: airlines,
+    setAirlines: setAirlines
+  };
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useGetAirlines);

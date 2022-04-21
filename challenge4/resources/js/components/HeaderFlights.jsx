@@ -27,14 +27,15 @@ const HeaderFlights = (props) => {
                     <Button variant="primary" onClick={handleShowAdd} className="btn btn-outline-primary btn-sm add_flight" >
                         Add flight
                     </Button>
-                    <ModalCrud
+                    {showAdd && <ModalCrud
                         name="Add"
                         show={showAdd}
                         handleClose={handleCloseAdd}
                         setFlights = {setFlights}
                     >
 
-                    </ModalCrud>
+                    </ModalCrud>}
+                    
                 </div>
             </div>
         </div>
