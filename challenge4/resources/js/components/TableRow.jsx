@@ -19,7 +19,7 @@ const TableRow = (props) => {
                 </Button>
             </td>
             <td>
-                <Button variant="primary" value={flight.id} onClick={handleShowDelete} className="btn btn-outline-danger btn-sm delete_flight" >
+                <Button variant="primary" value={flight.id} onClick={() => handleShowDelete(flight.id)} className="btn btn-outline-danger btn-sm" >
                     Delete
                 </Button>
             </td>

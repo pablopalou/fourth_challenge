@@ -87,4 +87,15 @@ class FlightController extends Controller
             ]);
         }
     }
+
+    public function delete(Request $request)
+    {
+        $flight = Flight::where('id', $request->input('flightId'))->firstOrFail();  
+        $flight->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Flight Deleted successfully"
+        ]);
+    }
 }

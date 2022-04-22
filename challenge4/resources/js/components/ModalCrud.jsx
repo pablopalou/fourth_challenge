@@ -5,7 +5,6 @@ import ComboBox from "./ComboBox";
 import Button from "react-bootstrap/Button";
 import useGetAirlines from '../hooks/useGetAirlines';
 import axios from 'axios';
-import useGetFlights from '../hooks/useGetFlights';
 
 const ModalCrud = (props) => {
     const {name, handleClose, show, setFlights, flights, selected, selEditAirline, selEditOrigin, selEditDestination} = props;
@@ -65,7 +64,7 @@ const ModalCrud = (props) => {
                 setErrorMessage("You must select a valid airline and also valid cities.");
             }
         } else {
-            console.log("entre a update");
+            // console.log("entre a update");
             const flightInfoUpdate = {
                 flightId: selected,
                 airlineId : event.target[0].value,
@@ -74,7 +73,7 @@ const ModalCrud = (props) => {
                 takeOff: event.target[3].value,
                 landing: event.target[4].value 
             };
-            console.log("Flight info update", flightInfoUpdate);
+            // console.log("Flight info update", flightInfoUpdate);
             if (flightInfoUpdate.airlineId != "SELECT" && flightInfoUpdate.originId != "SELECT" && flightInfoUpdate.destinationId != "SELECT" && flightInfoUpdate.takeOff != '' && flightInfoUpdate.landing != '' ){
                 axios.post(`http://127.0.0.1:8000/updateFlight`, flightInfoUpdate)
                 .then(response => {
@@ -115,8 +114,8 @@ const ModalCrud = (props) => {
     }
 
     const fillSecondAndThird = (value) => {
-        console.log("fillSecondAndThird");
-        console.log("Airlines: ", airlines);
+        // console.log("fillSecondAndThird");
+        // console.log("Airlines: ", airlines);
         if (value !== "SELECT"){
             {airlines.map(airline => {
                 if (airline.id == value ){ 
@@ -130,7 +129,7 @@ const ModalCrud = (props) => {
     }
 
     const fillCities = (value) => {
-        console.log(value);
+        // console.log(value);
         setSelectedAirline(value);
         fillSecondAndThird(value);
     };
@@ -138,7 +137,7 @@ const ModalCrud = (props) => {
     useEffect(() => {
         if (selEditAirline != undefined && selEditAirline != {}){
             // console.log("FIJARSE ACA:")
-            console.log(selEditAirline);
+            // console.log(selEditAirline);
             fillCities(selEditAirline.id);
             setSelectedOrigin(selEditOrigin.id);
             setSelectedDestination(selEditDestination.id);

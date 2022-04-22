@@ -55,3 +55,5 @@ Route::post('/flights', [FlightController::class, 'store']);
 
 Route::post('/updateFlight', [FlightController::class, 'update']);
 
+Route::post('/deleteFlight', [FlightController::class, 'delete']);
+
