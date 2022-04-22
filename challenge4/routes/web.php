@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AirlineController;
+use App\Http\Controllers\FlightController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,27 @@ Route::post('/updateCity/{id}', [CityController::class, 'update']);
 
 Route::delete('/deleteCity/{id}', [CityController::class, 'delete']);
 
+Route::get('/airlines', [AirlineController::class, 'index']);
+
+Route::post('/airlines', [AirlineController::class, 'store']);
+
+Route::get('/fetch-airlines', [AirlineController::class, 'fetchAirlines']);
+
+Route::get('/editairline/{id}', [AirlineController::class, 'edit']);
+
+Route::post('/updateairline/{id}', [AirlineController::class, 'update']);
+
+Route::delete('/deleteairline/{id}', [AirlineController::class, 'delete']);
+
+Route::get('/flights', [FlightController::class, 'index']);
+
+Route::get('/getFlights', [FlightController::class, 'getFlights']);
+
+Route::get('/getAirlines', [AirlineController::class, 'getAirlines']);
+
+Route::post('/flights', [FlightController::class, 'store']);
+
+Route::post('/updateFlight/{flight}', [FlightController::class, 'update']);
+
+Route::post('/deleteFlight', [FlightController::class, 'delete']);
 
