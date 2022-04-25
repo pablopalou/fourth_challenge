@@ -3,13 +3,26 @@ import axios from 'axios';
 
 const useGetFlights = (route) => {
 	const [flights, setFlights] = useState([]);
+	const [data, setData] = useState({});
 
 	useEffect(async () => {
 		const response = await axios(route);
-		setFlights(response.data['flights']);
+		setFlights(response.data.flights.data);
+		setData(response.data.flights);
+		// console.log(response.data.flights);
 	}, []);
 
-	return {flights, setFlights};
+	const updateFlights = async (route) => {
+		if (typeof setFlights == 'function'){
+			const response = await axios(route);
+			setFlights(response.data.flights.data);
+			setData(response.data.flights);
+		}
+	};
+
+	return {flights, setFlights, data, setData, updateFlights}
 };
 
-export default useGetFlights;
+
+
+export {useGetFlights};
