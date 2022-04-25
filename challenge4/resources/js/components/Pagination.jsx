@@ -3,28 +3,27 @@ import useGetFlights from '../hooks/useGetFlights';
 import {updateFlights} from '../hooks/useGetFlights';
 import React, { useEffect }  from 'react';
 
-export default function Example({data, setData}) {
+export default function Example({data, setData, updateFlights}) {
     // const [variableToRenderPage, setVariableToRenderPage] = React.useState(false);
     // const [pageData, setPageData] = React.useState(data);
     // console.log(data);
-    
-    const [page, setPage] = React.useState(data!=undefined && data!={} ? data.current_page : 1);
+    // data!=undefined && data!={} ? data.current_page : 
+    const [page, setPage] = React.useState(1);
     // console.log(page);
     // console.log("creo yo q va antes del error");
 
 
     const getFlightsFromPage = (event, moveCurrentPage) => {
         event.preventDefault();
-        if (page == undefined){
-            setPage(1); 
-        }
-        console.log("page", page);
+        let current = page;
         if (moveCurrentPage == "next"){
-            setPage(page + 1);
+            setPage(prev => prev + 1);
+            current += 1;
         } else if (moveCurrentPage == "prev"){
             setPage(page - 1);
+            current -= 1;
         }
-        const route = `http://127.0.0.1:8000/getFlights?page=${page}` ;
+        const route = `http://127.0.0.1:8000/getFlights?page=${current}` ;
         updateFlights(route);
     }
 

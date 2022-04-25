@@ -8,7 +8,7 @@ import axios from 'axios';
 import Pagination from '../components/Pagination'
 
 const Table = (props) => {
-    const {flights, setFlights, data, setData} = props;
+    const {flights, setFlights, data, setData, updateFlights} = props;
     const [showEdit, setShowEdit] = React.useState(false);
     const [showDelete, setShowDelete] = React.useState(false);
 
@@ -97,7 +97,7 @@ const Table = (props) => {
             </Button>
             </Modal.Footer>
         </Modal>
-        <Pagination data={data} setData={setData}/>
+        <Pagination data={data} setData={setData} updateFlights={updateFlights}/>
         </>
     );
 }

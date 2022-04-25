@@ -12,20 +12,17 @@ const useGetFlights = (route) => {
 		// console.log(response.data.flights);
 	}, []);
 
-	return {flights, setFlights, data, setData}
+	const updateFlights = async (route) => {
+		if (typeof setFlights == 'function'){
+			const response = await axios(route);
+			setFlights(response.data.flights.data);
+			setData(response.data.flights);
+		}
+	};
+
+	return {flights, setFlights, data, setData, updateFlights}
 };
 
-const updateFlights = async (route) => {
-	console.log("aaaa");
-	console.log(typeof setFlights);
-	if (typeof setFlights == 'function'){
-		console.log("esta definido");
-		const response = await axios(route);
-		setFlights(response.data.flights.data);
-		setData(response.data.flights);
-	} else {
-		console.log("setFlights == undefined");
-	}
-};
 
-export {useGetFlights, updateFlights};
+
+export {useGetFlights};

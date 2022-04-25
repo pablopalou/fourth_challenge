@@ -7046,12 +7046,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Example(_ref) {
   var data = _ref.data,
-      setData = _ref.setData;
+      setData = _ref.setData,
+      updateFlights = _ref.updateFlights;
 
   // const [variableToRenderPage, setVariableToRenderPage] = React.useState(false);
   // const [pageData, setPageData] = React.useState(data);
   // console.log(data);
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(data != undefined && data != {} ? data.current_page : 1),
+  // data!=undefined && data!={} ? data.current_page : 
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(1),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       page = _React$useState2[0],
       setPage = _React$useState2[1]; // console.log(page);
@@ -7060,21 +7062,20 @@ function Example(_ref) {
 
   var getFlightsFromPage = function getFlightsFromPage(event, moveCurrentPage) {
     event.preventDefault();
-
-    if (page == undefined) {
-      setPage(1);
-    }
-
-    console.log("page", page);
+    var current = page;
 
     if (moveCurrentPage == "next") {
-      setPage(page + 1);
+      setPage(function (prev) {
+        return prev + 1;
+      });
+      current += 1;
     } else if (moveCurrentPage == "prev") {
       setPage(page - 1);
+      current -= 1;
     }
 
-    var route = "http://127.0.0.1:8000/getFlights?page=".concat(page);
-    (0,_hooks_useGetFlights__WEBPACK_IMPORTED_MODULE_0__.updateFlights)(route);
+    var route = "http://127.0.0.1:8000/getFlights?page=".concat(current);
+    updateFlights(route);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -7181,7 +7182,8 @@ var Table = function Table(props) {
   var flights = props.flights,
       setFlights = props.setFlights,
       data = props.data,
-      setData = props.setData;
+      setData = props.setData,
+      updateFlights = props.updateFlights;
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -7305,7 +7307,8 @@ var Table = function Table(props) {
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_Pagination__WEBPACK_IMPORTED_MODULE_5__["default"], {
       data: data,
-      setData: setData
+      setData: setData,
+      updateFlights: updateFlights
     })]
   });
 };
@@ -7526,7 +7529,6 @@ var useGetAirlines = function useGetAirlines(route) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "updateFlights": () => (/* binding */ updateFlights),
 /* harmony export */   "useGetFlights": () => (/* binding */ useGetFlights)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -7534,8 +7536,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7589,55 +7589,48 @@ var useGetFlights = function useGetFlights(route) {
       }
     }, _callee);
   })), []);
+
+  var updateFlights = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(route) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!(typeof setFlights == 'function')) {
+                _context2.next = 6;
+                break;
+              }
+
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default()(route);
+
+            case 3:
+              response = _context2.sent;
+              setFlights(response.data.flights.data);
+              setData(response.data.flights);
+
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function updateFlights(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   return {
     flights: flights,
     setFlights: setFlights,
     data: data,
-    setData: setData
+    setData: setData,
+    updateFlights: updateFlights
   };
 };
-
-var updateFlights = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(route) {
-    var response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            console.log("aaaa");
-            console.log(typeof setFlights === "undefined" ? "undefined" : _typeof(setFlights));
-
-            if (!(typeof setFlights == 'function')) {
-              _context2.next = 11;
-              break;
-            }
-
-            console.log("esta definido");
-            _context2.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default()(route);
-
-          case 6:
-            response = _context2.sent;
-            setFlights(response.data.flights.data);
-            setData(response.data.flights);
-            _context2.next = 12;
-            break;
-
-          case 11:
-            console.log("setFlights == undefined");
-
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function updateFlights(_x) {
-    return _ref2.apply(this, arguments);
-  };
-}();
 
 
 
@@ -7678,7 +7671,8 @@ var FlightsAll = function FlightsAll() {
       flights = _useGetFlights.flights,
       setFlights = _useGetFlights.setFlights,
       data = _useGetFlights.data,
-      setData = _useGetFlights.setData;
+      setData = _useGetFlights.setData,
+      updateFlights = _useGetFlights.updateFlights;
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_HeaderFlights__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -7689,7 +7683,8 @@ var FlightsAll = function FlightsAll() {
         flights: flights,
         setFlights: setFlights,
         data: data,
-        setData: setData
+        setData: setData,
+        updateFlights: updateFlights
       })
     })]
   });
