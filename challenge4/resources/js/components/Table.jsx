@@ -5,9 +5,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ModalCrud from './ModalCrud';
 import axios from 'axios';
+import Pagination from '../components/Pagination'
 
 const Table = (props) => {
-    const {flights, setFlights} = props;
+    const {flights, setFlights, data, setData} = props;
     const [showEdit, setShowEdit] = React.useState(false);
     const [showDelete, setShowDelete] = React.useState(false);
 
@@ -96,6 +97,7 @@ const Table = (props) => {
             </Button>
             </Modal.Footer>
         </Modal>
+        <Pagination data={data} setData={setData}/>
         </>
     );
 }

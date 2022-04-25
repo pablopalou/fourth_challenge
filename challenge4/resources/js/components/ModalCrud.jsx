@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const ModalCrud = (props) => {
     const {name, handleClose, show, setFlights, flights, selected, selEditAirline, selEditOrigin, selEditDestination} = props;
-    console.log(JSON.stringify(name));
+    // console.log(JSON.stringify(name));
     
     const route = "http://127.0.0.1:8000/getAirlines"
     // const route = process.env.MIX_HOME_ROUTE + "/getAirlines";

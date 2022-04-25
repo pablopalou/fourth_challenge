@@ -28,11 +28,221 @@ class DatabaseSeeder extends Seeder
             'airline_id' => 1
         ]);
         Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
             'origin_id' => City::factory()->create()->id,
             'destination_id' => City::factory()->create()->id,
             'takeOff' => date("2020-2-20 16:30:45"),
             'landing' => date("2020-2-20 19:30:45"),
             'airline_id' => Airline::factory()->create()->id
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 3,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => date("2020-2-21 05:30:45"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 2,
+            'destination_id' => 1,
+            'takeOff' => date("2020-3-16 10:30:45"),
+            'landing' => date("2020-3-16 20:40:55"),
+            'airline_id' => 1
+        ]);
+        Flight::create([
+            'origin_id' => 1,
+            'destination_id' => 2,
+            'takeOff' => date("2020-2-20 16:30:45"),
+            'landing' => Carbon::now(),
+            'airline_id' => 1
         ]);
         Flight::create([
             'origin_id' => 2,
